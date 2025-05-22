@@ -1,0 +1,136 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .containers {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .sidebar {
+    width: 280px;
+    height: 100vh;
+    background-color: #0A1A86;
+    color: #CCCCCC;
+    position: relative;
+    transition: all 0.3s ease;
+    border-top-right-radius: 600px;
+    border-bottom-right-radius: 600px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    z-index: 9999;
+  }
+  
+  
+  .sidebar.collapsed {
+    width: 80px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+  
+  .toggle-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 15px 20px;
+    width: 100%;
+    text-align: left;
+  }
+  
+  .menu {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+  }
+
+  .material-symbols-outlined{
+    font-size: 34px;
+    color:#FFC729;
+  }
+  
+  .menu li {
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .menu .icon {
+    margin-right: 10px;
+    font-size: 20px;
+  }
+  
+  .sidebar.collapsed .text {
+    display: none;
+  }
+
+  button .material-symbols-outlined{
+    color:#CCCCCC;
+  }
+
+  .sidebar .text{
+    font-size: 20px;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight:500;
+    font-style: normal;
+  }
+  
+  .main-content {
+    flex-grow: 1;
+    padding-top: 0px;
+    padding-left:0px;
+    padding-right: 0px;
+    z-index: -10;
+  }
+
+  .main-tab{
+    position: absolute;
+    width: 100%;
+    left:0px;
+  }
+  
+@media (max-width: 480px) {
+  .sidebar{
+    width:135px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+  .material-symbols-outlined{
+    font-size: 20px;
+  }
+  .sidebar .text{
+    font-size: 14px;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight:500;
+    font-style: normal;
+  }
+  .sidebar.collapsed{
+    width: 40px;
+  }
+  .menu li {
+    padding: 15px 10px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* Tablet */
+@media (min-width: 481px) and (max-width: 1100px) {
+  .sidebar {
+    width: 280px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1400px) {
+  .sidebar {
+    width: 320px;
+  }
+}

@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sora:wght@100..800&display=swap');
+.header{
+    display:flex;
+    justify-content: space-between;
+    position: relative;
+}
+.logo{
+    width:140px;
+    display: inline;
+}
+.heading{
+    position: absolute;
+    top:18px;
+    left:100px;
+    font-size: 18px;
+}
+.vista{
+    color:#0C2C56;
+    font-weight: 600;
+    font-family: "Sora", sans-serif;
+    font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+.greeting{
+    display: block;
+    margin-top: 5px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+}
+.slogan{
+    display: block;
+    margin-top: 5px;
+     font-family: "Poppins", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.clock{
+    width:110px;
+    display: inline;
+}
+.time{
+    display: inline;
+}
+.display-date{
+font-size: 14px;
+position: absolute;
+top:39px;
+right:226px;
+}
+
+.display-time{
+    position: absolute;
+    top:22px;
+    right:220px;
+}
+.display-day{
+    position: absolute;
+    top:54px;
+    right:227px;
+}
+
+.display-year{
+    position: absolute;
+    top:72px;
+    right:232px;
+}
+
+.profiles{
+    border-radius: 400px;
+    width:60px;
+    height: 60px;
+    background-color:#0A1A86 ;
+    padding: 10px;
+    text-align: center;
+    display: inline-block;
+}
+
+.material-symbols-outlined .notificationss{
+    display: inline-block;
+}
+
+.right{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 300px;
+    flex-shrink: 100;
+    padding-right: 10px;
+}
