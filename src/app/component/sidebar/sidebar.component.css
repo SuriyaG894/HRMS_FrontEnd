@@ -12,7 +12,7 @@ body {
   }
   
   .sidebar {
-    width: 280px;
+    width: 0px;
     height: 100vh;
     background-color: #0A1A86;
     color: #CCCCCC;
@@ -124,13 +124,13 @@ body {
 /* Tablet */
 @media (min-width: 481px) and (max-width: 1100px) {
   .sidebar {
-    width: 280px;
+    width: 0px;
   }
 }
 
 /* Desktop */
 @media (min-width: 1400px) {
   .sidebar {
-    width: 320px;
+    width: 250px;
   }
 }
