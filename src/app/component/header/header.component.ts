@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -7,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent implements OnInit{
+export class HeaderComponent implements OnInit,OnChanges{
+ngOnChanges(changes: SimpleChanges): void {
+  this.day = this.findDay(new Date().getDay());
+    this.year = new Date().getFullYear();
+}
 hasNotification:boolean=true;
 time:number = Date.now();
 day?:string;
