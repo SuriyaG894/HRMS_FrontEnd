@@ -1,0 +1,46 @@
+<nav class="navbar navbar-expand-lg navbar-light flex-column" [ngClass]="{'toggleChange':toggle}" style="background-color: #0A1A86;color:#CCCCCC">
+  <!-- Legend/Heading on Top -->
+  <div class="w-100 py-0">
+    <h6 class="mb-0" style="margin-left: 20px; display: inline;font-family:'Inter',sans-serif ;font-weight: 800;">Leaves & WFH</h6>
+    <!-- <h5 class="mb-0" style="margin-left: 20px; display: inline;float:right;margin-right: 18px;">{{LoggedUsername | titlecase}}</h5> -->
+  </div>
+
+
+  <!-- Navbar Menu -->
+  <div class="container-fluid w-100">
+    <!-- Toggler for mobile -->
+    <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button> -->
+
+    <!-- Collapsible nav items -->
+    <div class="collapse navbar-collapse d-flex justify-content-between align-items-center" id="navbarNavDropdown">
+      <!-- Left menu items -->
+      <ul class="navbar-nav d-flex flex-row gap-3" >
+        <li class="nav-item" >
+          <a class="nav-link" routerLink="/applyLeave"
+          [ngClass]="{ 'link-indented': !toggle, 'link-default': toggle }" routerLinkActive="active">Apply Leave</a>
+        </li>
+        <li class="nav-item" >
+          <a class="nav-link" routerLink="/applyWfh"
+           routerLinkActive="active">Apply WFH</a>
+        </li>
+        <li class="nav-item" >
+          <a class="nav-link" routerLink="/leaveLog"
+          routerLinkActive="active">Leave Log</a>
+        </li>
+        <li class="nav-item" >
+          <a class="nav-link" routerLink="wfhLog"
+          routerLinkActive="active">WFH Log</a>
+        </li>
+        <li class="nav-item" >
+          <a class="nav-link" routerLink="/policy"
+          routerLinkActive="active">Leave & WFH Policy</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<router-outlet></router-outlet>

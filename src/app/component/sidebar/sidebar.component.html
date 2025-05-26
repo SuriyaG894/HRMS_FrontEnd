@@ -3,12 +3,12 @@
     <div [ngClass]="{'collapsed':isSelected}" class="sidebar"  id="sidebar" >
       <button class="toggle-btn" (click)="toggleSidebar()" style="margin-top: 20px;"><span class="material-symbols-outlined">menu</span></button>
       <ul class="menu">
-        <li><span class="icon"><span class="material-symbols-outlined">home</span></span><span class="text">Home</span></li>
-        <li><span class="icon"><span class="material-symbols-outlined">person</span></span><span class="text">User Profile</span></li>    
-        <li><span class="icon"><span class="material-symbols-outlined">trip</span></span><span class="text">Project Hub</span></li>    
-        <li><span class="icon"><span class="material-symbols-outlined">schedule</span></span><span class="text">Timesheet</span></li>    
-        <li><span class="icon"><span class="material-symbols-outlined">event</span></span><span class="text">Leaves & WFH</span></li>    
-        <li><span class="icon"><span class="material-symbols-outlined">notifications</span></span><span class="text">Notifications</span></li>    
+        <li><span class="icon"><span class="material-symbols-outlined" (click)="setPage('home')">home</span></span><span class="text">Home</span></li>
+        <li><span class="icon"><span class="material-symbols-outlined" (click)="setPage('profile')">person</span></span><span class="text">User Profile</span></li>    
+        <li><span class="icon"><span class="material-symbols-outlined" (click)="setPage('project')">trip</span></span><span class="text">Project Hub</span></li>    
+        <li><span class="icon"><span class="material-symbols-outlined" (click)="setPage('timesheet')">schedule</span></span><span class="text">Timesheet</span></li>    
+        <li><span class="icon"><span class="material-symbols-outlined" (click)="setPage('leave')">event</span></span><span class="text">Leaves & WFH</span></li>    
+        <li><span class="icon"><span class="material-symbols-outlined" (click)="setPage('notification')">notifications</span></span><span class="text">Notifications</span></li>    
 
       </ul>
     </div>
@@ -18,7 +18,7 @@
       <p>This is the main content area.</p> -->
       <app-header></app-header>
       <div [ngClass]="{'main-tab':!isSelected}">
-      <app-main-tab [toggle]="!isSelected"></app-main-tab>
+      <app-main-tab [toggle]="!isSelected" [page]="page" ></app-main-tab>
     </div>
     </div>
     </div>

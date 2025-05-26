@@ -1,51 +1,50 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-header',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit,OnChanges{
-ngOnChanges(changes: SimpleChanges): void {
-  this.day = this.findDay(new Date().getDay());
-    this.year = new Date().getFullYear();
-}
-hasNotification:boolean=true;
-time:number = Date.now();
-day?:string;
-year?:number;
-ngOnInit(): void {
-    this.day = this.findDay(new Date().getDay());
-    this.year = new Date().getFullYear();
-}
+export class HeaderComponent implements OnInit, OnDestroy {
+  hasNotification: boolean = true;
+  time: number = Date.now();
+  day?: string;
+  year?: number;
+  private timerId?: any;
 
-findDay(day:number):string{
-  switch(day){
-    case 1:
-      return "Monday";
-      break;
-    case 2:
-      return "Tuesday";
-      break;
-    case 3:
-      return "Wednesday";
-      break;
-    case 4:
-      return "Thursday";
-      break;
-    case 5:
-      return "Friday";
-      break;
-    case 6:
-      return "Saturday";
-      break;
-    case 7:
-      return "Sunday";
-      break;
-    default:
-      return "Invalid Day";
+  ngOnInit(): void {
+    this.updateTime(); // Initial call
+    this.timerId = setInterval(() => {
+      this.updateTime();
+    }, 1000); // Update every 1 second
   }
-}
+
+  ngOnDestroy(): void {
+    if (this.timerId) {
+      clearInterval(this.timerId);
+    }
+  }
+
+  updateTime(): void {
+    const now = new Date();
+    this.time = now.getTime();
+    this.day = this.findDay(now.getDay());
+    this.year = now.getFullYear();
+  }
+
+  findDay(day: number): string {
+    switch (day) {
+      case 0: return "Sun";    // Note: 0 = Sunday in JavaScript
+      case 1: return "Mon";
+      case 2: return "Tues";
+      case 3: return "Wed";
+      case 4: return "Thurs";
+      case 5: return "Fri";
+      case 6: return "Sat";
+      default: return "Invalid Day";
+    }
+  }
 }

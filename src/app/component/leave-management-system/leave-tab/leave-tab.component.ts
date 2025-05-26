@@ -1,26 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
-import { LeaveTabComponent } from "../leave-management-system/leave-tab/leave-tab.component";
-import { LeaveDashboardComponent } from "../leave-management-system/leave-dashboard/leave-dashboard.component";
 
 @Component({
-  selector: 'app-main-tab',
-  imports: [RouterOutlet, RouterModule, CommonModule, LeaveTabComponent, LeaveDashboardComponent],
-  templateUrl: './main-tab.component.html',
-  styleUrl: './main-tab.component.css'
+  selector: 'app-leave-tab',
+  imports: [RouterOutlet,CommonModule,RouterModule],
+  templateUrl: './leave-tab.component.html',
+  styleUrl: './leave-tab.component.css'
 })
-export class MainTabComponent {
+export class LeaveTabComponent {
 role?:string[];
   LoggedUsername?:string;
 
-  constructor(private route:Router){
-    
-  }
+  constructor(private route:Router){}
 
- @Input() toggle: boolean = false;
-@Input() page: string = '';
-
+  @Input() toggle!:boolean;
 
 
   logout() {
@@ -43,7 +37,5 @@ role?:string[];
       // }
       // this.role = this.authService.decodeToken()['roles'];
       // console.log(this.role);
-      console.log(this.page);
-      console.log(this.toggle);
   }
 }

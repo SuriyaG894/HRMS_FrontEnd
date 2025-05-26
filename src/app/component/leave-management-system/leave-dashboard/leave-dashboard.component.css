@@ -1,0 +1,97 @@
+.apply-leave-btn{
+    margin-top:10px;
+    padding-left: 30px;
+    padding-right:30px;
+    border-radius: 50px;
+    width:12rem;
+    /* margin-right: 10rem; */
+}
+
+.leave-btn{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.box span{
+    display: block;
+    margin-bottom: 6px;
+}
+.box{
+    padding:5px;
+}
+
+.box1{
+    background-color: #FFC729;
+    padding:5px;
+    width:max-content;
+    margin-left: 1rem;
+    margin-top:0.5rem;
+}
+.main-box{
+    width:27em;
+    padding-right: 0px;
+}
+
+.left-align{
+    display: flex;
+    justify-content: space-between;
+    padding-top:10px;
+    padding-bottom: 5px;
+}
+
+.box-color{
+    background-color: #FFC72980;
+}
+
+.alert-box-color{
+    background-color: #0A1A864D;
+}
+
+.chart-design{
+    width:170px;
+}
+
+td{
+    display: inline-block;
+    margin-right: 10px;
+}
+
+tr{
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.leave-types{
+    display:flex;
+    justify-content: space-between;
+    gap:20px;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+}
+
+.leave-box{
+    text-align: center;
+    color:#032F03;
+    padding: 5px;
+    width: 130px;
+    background-color: #248B5980;
+}
+
+.card{
+    border: none;
+}
+
+.card-header{
+    border:none;
+}
+
+.scrollable-wrapper {
+  max-height: 60vh; /* or any fixed height like 600px */
+  overflow-y: auto;
+  padding-right: 10px; /* optional, to avoid scrollbar overlap */
+  margin: 0px auto;
+}
+
+.sidebar-expanded{
+    padding-left:10.5rem;
+}

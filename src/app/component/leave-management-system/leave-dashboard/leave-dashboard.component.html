@@ -1,0 +1,143 @@
+<div class="scrollable-wrapper" style="max-width:71rem;" [ngClass]="{'sidebar-expanded':!toggle}">
+    <div class="container my-4">
+        <!-- Apply Leave Button Row -->
+        <div class="row leave-btn mb-3">
+            <div class="col text-end">
+                <button class="btn btn-success apply-leave-btn">Apply For Leave</button>
+            </div>
+        </div>
+
+        <!-- Cards Row -->
+        <div class="row g-4">
+            <!-- Accrual Summary Card -->
+            <div class="col-md-6">
+                <div class="card  main-box">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">Accrual Summary</h5>
+                    </div>
+                    <div class="card-body box-color">
+                        <div class="row left-align">
+                            <div class="col">
+                                <div class="box">
+                                    <table>
+                                        <tr>
+                                            <td>Last Credited On:</td>
+                                            <td>10-02-2025</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Credited Leaves:</td>
+                                            <td>2</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Carry Forwarded:</td>
+                                            <td>5</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="box1 text-center">
+                                    <h2>2.51</h2>
+                                    <span>Leave balance</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Leave Summary Card -->
+            <div class="col-md-6">
+                <div class="card ">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">Leave Summary</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <div class="chart-design mx-auto">
+                            <app-leave-summary-chart></app-leave-summary-chart>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <div class="row g-4 align-items-stretch">
+            <!-- Accrual Summary Card -->
+            <div class="col-md-6">
+                <div class="card  h-100">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">Alerts</h5>
+                    </div>
+                    <div class="card-body alert-box-color">
+                        <div class="row left-align">
+                            <div class="col">
+                                <div class="box">
+                                    <table style="border-spacing: 30px; width: 500px;">
+                                        <tr>
+                                            <td>
+                                                <div
+                                                    style="background-color: white;padding: 2px;border-radius: 5px;width: max-content;">
+                                                    <span class="material-symbols-outlined"
+                                                        style="font-size: 34px;">warning</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="background-color: white;padding: 5px;border-radius: 5px;">
+                                                    <span
+                                                        style="font-size: 12px; width:max-content;padding: 5px;">You’re
+                                                        nearing the casual leave limit for Q2</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div
+                                                    style="background-color: white;padding: 2px;border-radius: 5px;width: max-content;">
+                                                    <span class="material-symbols-outlined"
+                                                        style="font-size: 34px;">warning</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="background-color: white;padding: 5px;border-radius: 5px;">
+                                                    <span style="font-size: 12px;width:max-content;padding: 5px;">Your
+                                                        leave request for 27–29 May is pending manager approval.</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Leave Summary Card -->
+            <div class="col-md-6">
+                <div class="card  h-100">
+                    <div class="card-body text-center">
+                        <div class="leave-types">
+                            <div class="leave-box">
+                                <h6>Casual leave</h6>
+                                <h3>3</h3>
+                            </div>
+                            <div class="leave-box">
+                                <h6>Maternity leave</h6>
+                                <h3>3</h3>
+                            </div>
+                            <div class="leave-box">
+                                <h6>Sick Leave</h6>
+                                <h3>3</h3>
+                            </div>
+                            <div class="leave-box">
+                                <h6>Paternity leave</h6>
+                                <h3>3</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

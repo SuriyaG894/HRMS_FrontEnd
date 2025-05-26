@@ -1,0 +1,81 @@
+<div class="page-container">
+  <div class="form-container">
+    <form>
+      <!-- Leave Type Select -->
+      <div class="form-group selectfield">
+        <h5>Select Leave Type</h5>
+        <span class="material-symbols-outlined dropdown-icon">arrow_drop_down</span>
+        <select class="form-control">
+          <option selected>Select Leave Type</option>
+          <option>CASUAL_LEAVE</option>
+          <option>SICK_LEAVE</option>
+          <option>MARRIAGE</option>
+        </select>
+      </div>
+
+      <!-- Leave Duration Radio -->
+      <h5>Select Leave Duration</h5>
+      <div class="d-flex gap-5">
+        <div class="custom-radio">
+          <input type="radio" id="rect1" name="customRectRadio" checked />
+          <label for="rect1">Full Day</label>
+        </div>
+        <div class="custom-radio">
+          <input type="radio" id="rect2" name="customRectRadio" />
+          <label for="rect2">Half Day</label>
+        </div>
+      </div>
+
+      <!-- Date Labels -->
+      <div class="d-flex date-labels">
+        <ng-container *ngIf="showDate">
+          <h5>Start Date</h5>
+          <h5>End Date</h5>
+        </ng-container>
+        <ng-container *ngIf="!showDate">
+          <h5>Date</h5>
+        </ng-container>
+      </div>
+
+      <!-- Date Fields -->
+      <div class="d-flex date-fields">
+        <ng-container *ngIf="showDate">
+          <input
+            type="date"
+            [(ngModel)]="selectedDate1"
+            [ngClass]="{ 'hide-placeholder': !selectedDate1 }"
+            name="startDate"
+          />
+          <input
+            type="date"
+            [(ngModel)]="selectedDate2"
+            [ngClass]="{ 'hide-placeholder': !selectedDate2 }"
+            name="endDate"
+          />
+        </ng-container>
+        <ng-container *ngIf="!showDate">
+          <input
+            type="date"
+            [(ngModel)]="selectedDate1"
+            [ngClass]="{ 'hide-placeholder': !selectedDate1 }"
+            name="startDate"
+          />
+          <div class="fn-an-radios">
+            <label>
+              <input type="radio" name="halfDaySession" />
+              <span>FN</span>
+            </label>
+            <label>
+              <input type="radio" name="halfDaySession" />
+              <span>AN</span>
+            </label>
+          </div>
+        </ng-container>
+      </div>
+
+      <!-- Reason -->
+      <h5>Reason</h5>
+      <textarea class="reason-textarea"></textarea>
+    </form>
+  </div>
+</div>

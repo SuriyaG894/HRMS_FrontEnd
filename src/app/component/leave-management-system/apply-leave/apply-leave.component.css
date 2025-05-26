@@ -1,0 +1,125 @@
+/* Center entire page */
+.page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  margin-top: 50px;
+}
+
+/* Centered form container */
+.form-container {
+  width: 28rem;
+  background-color: #c3c5d540;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* Dropdown icon inside select */
+.selectfield {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.selectfield select {
+  width: 100%;
+  padding: 8px 30px 8px 10px;
+  font-size: 14px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.selectfield .dropdown-icon {
+  position: absolute;
+  right: 10px;
+  top: 36px;
+  pointer-events: none;
+  color: #666;
+}
+
+/* Date labels and fields */
+.date-labels,
+.date-fields {
+  display: flex;
+  gap: 6.8rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+/* Fixed textarea */
+.reason-textarea {
+  width: 100%;
+  height: 5rem;
+  resize: none;
+}
+
+/* Custom rectangular radio buttons */
+.custom-radio input[type="radio"] {
+  display: none;
+}
+
+.custom-radio label {
+  display: inline-block;
+  position: relative;
+  padding-left: 30px;
+  cursor: pointer;
+  font-size: 16px;
+  user-select: none;
+}
+
+.custom-radio label::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #555;
+  background-color: #fff;
+}
+
+.custom-radio input[type="radio"]:checked + label::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 18px;
+  height: 18px;
+  background: green;
+}
+
+.custom-radio label:hover::before {
+  border-color: #007bff;
+}
+
+/* Hide the placeholder (dd/mm/yyyy) when no value is selected */
+.hide-placeholder::-webkit-datetime-edit {
+  color: transparent;
+}
+
+.hide-placeholder::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+
+/* FN/AN radio styling */
+.fn-an-radios {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.fn-an-radios input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  accent-color: green;
+}
+
+.fn-an-radios label {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  cursor: pointer;
+}

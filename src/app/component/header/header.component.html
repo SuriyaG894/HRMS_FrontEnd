@@ -11,11 +11,10 @@
     <div class="right">
         <div class="time">
         <img class="clock" src="./assets/clock.png" alt="Clock">
-        <div style="display: inline-block;">
+        <div style="display: inline-block;text-align: center;">
         <span class="display-time">{{time | date:'hh:mm:ss'}}</span>
-        <span class="display-date">{{time | date:'d MMMM'}}</span>
+        <span class="display-date">{{time | date:'dd/MM/yy'}}</span>
         <span class="display-day">{{day}}</span>
-        <span class="display-year">{{year}}</span>
         </div>
     </div>
     <div style="position: relative;">
@@ -23,7 +22,7 @@
         <span class="material-symbols-outlined" style="font-size:40px;color:#0A1A86">notifications</span>
     </div>
         <div class="profiles">
-            <span class="material-symbols-outlined notificationss" style="font-size: 35px;color:#FFC729">person</span>
+            <span class="material-symbols-outlined notificationss" style="font-size: 26px;color:#FFC729">person</span>
         </div>
     </div>
 </div>
