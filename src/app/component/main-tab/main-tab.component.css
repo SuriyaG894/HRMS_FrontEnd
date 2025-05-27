@@ -13,3 +13,36 @@
 .toggleChange{
     padding-left:325px;
 }
+
+.containers {
+  display: flex;
+  height: 100%;
+}
+
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.main-body {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-top: 0.2rem;
+  height: 70vh;
+}
+  .scroll-enabled {
+  max-height: 70vh; /* or any fixed height like 600px */
+  overflow-y: auto;
+  padding-right: 10px; /* optional, to avoid scrollbar overlap */
+  margin: 0px auto;
+}
+
+.scroll-disabled {
+  overflow-y: hidden !important;
+}
+
+.sidebar-expanded{
+    padding-left:10.5rem;
+}

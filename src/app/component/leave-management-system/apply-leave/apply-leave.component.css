@@ -3,22 +3,24 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 60vh;
-  margin-top: 50px;
+  height: 52vh;
+  margin-top: 58px;
 }
 
 /* Centered form container */
 .form-container {
   width: 28rem;
   background-color: #c3c5d540;
-  padding: 20px;
+  padding: 12px;
   border-radius: 10px;
+  color:#0A1A86;
+  padding-bottom: 5px;
 }
 
 /* Dropdown icon inside select */
 .selectfield {
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .selectfield select {
@@ -43,8 +45,8 @@
 .date-fields {
   display: flex;
   gap: 6.8rem;
-  margin-bottom: 1rem;
-  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 /* Fixed textarea */
@@ -75,23 +77,28 @@
   top: 2px;
   width: 20px;
   height: 20px;
-  border: 2px solid #555;
+  border: 2px solid #0A1A86;
   background-color: #fff;
+  box-sizing: border-box;
+  border-radius: 2px; /* optional, for square shape */
 }
 
 .custom-radio input[type="radio"]:checked + label::after {
   content: "";
   position: absolute;
-  left: 0;
-  top: 4px;
-  width: 18px;
-  height: 18px;
-  background: green;
+  left: 2.8px;
+  top: 4.5px;
+  width: 15px;
+  height: 15px;
+  background-color: green;
+  border-radius: 0px; /* optional, for smooth inner box */
+  z-index: 1;
 }
 
 .custom-radio label:hover::before {
-  border-color: #007bff;
+  border-color: green;
 }
+
 
 /* Hide the placeholder (dd/mm/yyyy) when no value is selected */
 .hide-placeholder::-webkit-datetime-edit {
@@ -122,4 +129,8 @@
   align-items: center;
   font-size: 14px;
   cursor: pointer;
+}
+
+.sidebar-expanded{
+    padding-left:10.5rem;
 }

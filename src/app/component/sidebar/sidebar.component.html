@@ -1,5 +1,5 @@
 <!-- #CCCCCC -->
-  <div class="containers">
+  <!-- <div class="containers"> -->
     <div [ngClass]="{'collapsed':isSelected}" class="sidebar"  id="sidebar" >
       <button class="toggle-btn" (click)="toggleSidebar()" style="margin-top: 20px;"><span class="material-symbols-outlined">menu</span></button>
       <ul class="menu">
@@ -7,20 +7,17 @@
         <li><span class="icon"><span class="material-symbols-outlined" (click)="setPage('profile')">person</span></span><span class="text">User Profile</span></li>    
         <li><span class="icon"><span class="material-symbols-outlined" (click)="setPage('project')">trip</span></span><span class="text">Project Hub</span></li>    
         <li><span class="icon"><span class="material-symbols-outlined" (click)="setPage('timesheet')">schedule</span></span><span class="text">Timesheet</span></li>    
-        <li><span class="icon"><span class="material-symbols-outlined" (click)="setPage('leave')">event</span></span><span class="text">Leaves & WFH</span></li>    
+        <li><span class="icon"><span class="material-symbols-outlined" (click)="setPage('leave')" routerLink="/leave">event</span></span><span class="text">Leaves & WFH</span></li>    
         <li><span class="icon"><span class="material-symbols-outlined" (click)="setPage('notification')">notifications</span></span><span class="text">Notifications</span></li>    
 
       </ul>
-    </div>
-    <div style="flex-grow: 1;">
+    <!-- </div> -->
+    <!-- <div style="flex-grow: 1;">
     <div class="main-content" [ngClass]="{'collapsed':!isSelected}">
-      <!-- <h1>Welcome</h1>
-      <p>This is the main content area.</p> -->
       <app-header></app-header>
       <div [ngClass]="{'main-tab':!isSelected}">
       <app-main-tab [toggle]="!isSelected" [page]="page" ></app-main-tab>
     </div>
     </div>
-    </div>
+    </div> -->
   </div>
-

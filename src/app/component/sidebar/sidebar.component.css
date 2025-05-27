@@ -121,11 +121,11 @@ body {
 }
 
 /* Tablet */
-@media (min-width: 1000px) and (max-width: 1100px) {
+@media (min-width: 480px) and (max-width: 1600px) {
   .sidebar {
     width: 230px;
   }
-   .menu {
+   /* .menu {
     list-style: none;
     padding: 0;
     margin: 20px 0;
@@ -145,11 +145,11 @@ body {
   .menu .icon {
     margin-right: 10px;
     font-size: 20px;
-  }
+  } */
 }
 
 /* Desktop */
-@media (min-width: 1400px) {
+@media (min-width: 1650px) {
   .sidebar {
     width: 250px;
   }

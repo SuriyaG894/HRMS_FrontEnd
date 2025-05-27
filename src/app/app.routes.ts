@@ -7,13 +7,37 @@ import { LeaveWfhPolicyComponent } from './component/leave-management-system/lea
 import { AppComponent } from './app.component';
 import { LeaveDashboardComponent } from './component/leave-management-system/leave-dashboard/leave-dashboard.component';
 import { LeaveSummaryChartComponent } from './component/leave-management-system/leave-summary-chart/leave-summary-chart.component';
+import { LeaveTabComponent } from './component/leave-management-system/leave-tab/leave-tab.component';
+import { MainTabComponent } from './component/main-tab/main-tab.component';
 
 export const routes: Routes = [
-    {path:'applyLeave',component:ApplyLeaveComponent},
-    {path:'applyWfh',component:ApplyWfhComponent},
-    {path:'leaveLog',component:LeaveLogComponent},
-    {path:'wfhLog',component:WfhLogComponent},
-    {path:'policy',component:LeaveWfhPolicyComponent},
-    {path:'leave-dashboard',component:LeaveDashboardComponent},
-    {path:'leaveSummaryChart',component:LeaveSummaryChartComponent},
+
+     {
+    path: '',
+    component: MainTabComponent,
+    children: [
+      {
+        path: 'leave',
+        loadChildren: () => import('./modules/leave.module').then(m => m.LeaveModule)
+      }
+      // ,
+      // {
+      //   path: 'user',
+      //   loadChildren: () => import('./component/user/user.module').then(m => m.UserModule)
+      // },
+      // {
+      //   path: 'project',
+      //   loadChildren: () => import('./component/project/project.module').then(m => m.ProjectModule)
+      // },
+      // {
+      //   path: 'timesheet',
+      //   loadChildren: () => import('./component/timesheet/timesheet.module').then(m => m.TimesheetMo
+      // },
+      // {
+      //   path: 'notifications',
+      //   loadChildren: () => import('./component/notification/notification.module').then(m => m.Notif
+      // },
+      ,{ path: '', redirectTo: 'leave/dashboard', pathMatch: 'full' }
+    ]
+  }
 ];

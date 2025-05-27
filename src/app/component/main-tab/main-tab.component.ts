@@ -1,12 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterModule, RouterOutlet } from '@angular/router';
 import { LeaveTabComponent } from "../leave-management-system/leave-tab/leave-tab.component";
 import { LeaveDashboardComponent } from "../leave-management-system/leave-dashboard/leave-dashboard.component";
+import { HeaderComponent } from "../header/header.component";
+import { SidebarComponent } from "../sidebar/sidebar.component";
 
 @Component({
   selector: 'app-main-tab',
-  imports: [RouterOutlet, RouterModule, CommonModule, LeaveTabComponent, LeaveDashboardComponent],
+  imports: [RouterOutlet, RouterModule, CommonModule, HeaderComponent, SidebarComponent, LeaveTabComponent],
   templateUrl: './main-tab.component.html',
   styleUrl: './main-tab.component.css'
 })
@@ -14,13 +16,21 @@ export class MainTabComponent {
 role?:string[];
   LoggedUsername?:string;
 
-  constructor(private route:Router){
-    
-  }
-
  @Input() toggle: boolean = false;
 @Input() page: string = '';
 
+isScrollable = true;
+
+  constructor(private router: Router) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        // Set scroll visibility based on route
+        const noScrollRoutes = ['/leave/policy', '/leave/summary','/leave/applyLeave'];
+        console.log(!noScrollRoutes.includes(event.urlAfterRedirects));
+        this.isScrollable = !noScrollRoutes.includes(event.urlAfterRedirects);
+      }
+    });
+  }
 
 
   logout() {

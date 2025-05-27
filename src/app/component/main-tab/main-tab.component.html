@@ -1,3 +1,14 @@
-<ng-container *ngIf="page === 'leave'">
+<!-- <ng-container *ngIf="page === 'leave'">
   <app-leave-tab [toggle]="toggle"></app-leave-tab>
-</ng-container>
+</ng-container> -->
+<div class="containers">
+  <app-sidebar></app-sidebar>
+  <div class="main-content">
+    <app-header></app-header>
+    <app-leave-tab></app-leave-tab>
+    <div class="main-body" [ngClass]="{ 'scroll-enabled': isScrollable, 'scroll-disabled': !isScrollable }">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+

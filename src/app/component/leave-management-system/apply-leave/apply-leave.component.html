@@ -1,3 +1,4 @@
+<div class="scrollable-wrapper" style="max-width:71rem;" [ngClass]="{'sidebar-expanded':!toggle}">
 <div class="page-container">
   <div class="form-container">
     <form>
@@ -30,7 +31,7 @@
       <div class="d-flex date-labels">
         <ng-container *ngIf="showDate">
           <h5>Start Date</h5>
-          <h5>End Date</h5>
+          <h5 style="margin-left: 50px;">End Date</h5>
         </ng-container>
         <ng-container *ngIf="!showDate">
           <h5>Date</h5>
@@ -76,6 +77,10 @@
       <!-- Reason -->
       <h5>Reason</h5>
       <textarea class="reason-textarea"></textarea>
+      <div style="text-align: center;">
+        <button class="btn" style="background-color:#0A1A86;color:#ffffff">Submit For Approval</button>
+      </div>
     </form>
   </div>
+</div>
 </div>

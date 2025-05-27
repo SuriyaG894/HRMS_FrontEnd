@@ -14,8 +14,10 @@ export class ApplyLeaveComponent {
 
   selectedDate1: string = '';
 
+  toggle:boolean = false;
+
 selectedDate2: string = '';
-showDate:boolean = false;
+showDate:boolean = true;
 
   leaveForm!: FormGroup;
   showNoonType = false;

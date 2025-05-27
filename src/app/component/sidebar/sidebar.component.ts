@@ -4,10 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from "../header/header.component";
 import { MainTabComponent } from "../main-tab/main-tab.component";
 import { SidebarService } from '../../services/sidebar.service';
+import { RouterModule, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [CommonModule, HeaderComponent, MainTabComponent],
+  imports: [CommonModule,RouterModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })

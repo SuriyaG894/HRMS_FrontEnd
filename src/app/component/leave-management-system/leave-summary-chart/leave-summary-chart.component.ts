@@ -14,12 +14,12 @@ export class LeaveSummaryChartComponent {
    chartType: 'doughnut' = 'doughnut';
 
   chartData: ChartConfiguration<'doughnut'>['data'] = {
-    labels: ['Red', 'Blue', 'Yellow'],
+    labels: ['Red', 'Blue'],
     datasets: [
       {
-        data: [300, 50, 100],
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-        hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+        data: [300, 50],
+        backgroundColor: ['#0A1A86', 'green'],
+        hoverBackgroundColor: ['#0A1A86', 'green']
       }
     ]
   };
