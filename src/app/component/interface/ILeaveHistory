@@ -1,0 +1,11 @@
+export interface ILeaveHistory{
+    leaveType:string,
+    leaveDurationType:string,
+    dateRange:string,
+    totalLeaveDays:number,
+    noonType:string,
+    appliedOn:string,
+    status:string,
+    approverName:string,
+    remarks?:string
+}

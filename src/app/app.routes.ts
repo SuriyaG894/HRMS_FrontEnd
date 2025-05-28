@@ -9,12 +9,14 @@ import { LeaveDashboardComponent } from './component/leave-management-system/lea
 import { LeaveSummaryChartComponent } from './component/leave-management-system/leave-summary-chart/leave-summary-chart.component';
 import { LeaveTabComponent } from './component/leave-management-system/leave-tab/leave-tab.component';
 import { MainTabComponent } from './component/main-tab/main-tab.component';
-
+import { LoginComponent } from './component/login/login.component';
+import { authGuard } from './services/authService/auth-guard';
 export const routes: Routes = [
 
      {
     path: '',
     component: MainTabComponent,
+    canActivate: [authGuard],
     children: [
       {
         path: 'leave',
@@ -39,5 +41,6 @@ export const routes: Routes = [
       // },
       ,{ path: '', redirectTo: 'leave/dashboard', pathMatch: 'full' }
     ]
-  }
+  },
+  {path:'login',component:LoginComponent}
 ];

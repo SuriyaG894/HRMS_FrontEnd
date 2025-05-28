@@ -1,1 +1,61 @@
-<p>leave-log works!</p>
+<div style="width:100%">
+    <div class="btn-alignment">
+        <div>
+        <button class="btn btn-success">Filter <span class="material-symbols-outlined">filter_alt</span></button>
+        </div>
+        <div>
+        <button class="btn btn-primary">Sort By <span class="material-symbols-outlined">swap_vert</span></button>
+        </div>
+        <div>
+        <button class="btn btn-success">Export as Xlsx/CSV <span class="material-symbols-outlined">download</span></button>
+        </div>
+    </div>
+
+    <div class="table-alignment">
+        <table class="table table-responsive table-bordered">
+            <thead >
+                 <tr>
+                    <th>Leave type</th>
+                    <th>Duration</th>
+                    <th>Date Range</th>
+                    <th>Days</th>
+                    <th>FN/AN</th>
+                    <th>Applied On</th>
+                    <th>Status</th>
+                    <th>Approved By</th>
+                    <th>Remarks</th>
+                    <th>Action</th>
+                 </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let leave of pagedData">
+        <td>{{ leave.leaveType }}</td>
+        <td>{{ leave.leaveDurationType }}</td>
+        <td>{{ leave.dateRange }}</td>
+        <td>{{ leave.totalLeaveDays }}</td>
+        <td>{{ leave.noonType }}</td>
+        <td>{{ leave.appliedOn }}</td>
+        <td>{{ leave.status }}</td>
+        <td>{{ leave.approverName }}</td>
+        <td>{{ leave.remarks || 'N/A' }}</td>
+        <td style="width:100px"><button class="btn btn-success" *ngIf="leave.status != 'CANCELLED'" (click)="cancelLeave(leave.leaveId)" [disabled]="leave.status == 'APPROVED'">Cancel</button>
+        <p *ngIf="leave.status == 'CANCELLED'">CANCELLED</p>
+        </td>
+      </tr>
+                <!-- <tr>
+                    <td>Sick</td>
+                    <td>Full Day</td>
+                    <td>22/05/2025 - 23/05/2025</td>
+                    <td>2</td>
+                    <td>-</td>
+                    <td>22/05/2025</td>
+                    <td>Approved</td>
+                    <td>Sreeranjini</td>
+                    <td>-</td>
+                    <td style="width:100px"><button class="btn btn-success">Cancel</button></td>
+                </tr> -->
+            </tbody>
+        </table>
+    </div>
+    
+</div>

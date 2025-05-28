@@ -17,19 +17,22 @@ body {
     color: #CCCCCC;
     position: relative;
     transition: all 0.3s ease;
-    border-top-right-radius: 600px;
+    /* border-top-right-radius: 600px;
     border-bottom-right-radius: 600px;
     border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+    border-bottom-left-radius: 0; */
     z-index: 9999;
+    /* transition: width 0.3s ease; */
   }
   
   
-  .sidebar.collapsed {
-    width:5.4rem;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 0px;
-  }
+.sidebar.collapsed {
+  width: 5.4rem;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  transition: width 0.5s ease;
+}
+
   
   .toggle-btn {
     background: none;
@@ -123,7 +126,7 @@ body {
 /* Tablet */
 @media (min-width: 480px) and (max-width: 1600px) {
   .sidebar {
-    width: 230px;
+    width: 220px;
   }
    /* .menu {
     list-style: none;

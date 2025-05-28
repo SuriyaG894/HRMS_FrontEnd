@@ -1,1 +1,22 @@
-<p>leave-wfh-policy works!</p>
+<div class="container">
+<!-- <div class="controls">
+  <button (click)="prevPage()" [disabled]="page <= 1">Previous</button>
+  <span>Page {{ page }} of {{ totalPages }}</span>
+  <button (click)="nextPage()" [disabled]="page >= totalPages">Next</button>
+</div> -->
+<div class="pdfView">
+    <!-- <pdf-viewer 
+  [src]="pdfBlobUrl" 
+  [page]="page"
+  [render-text]="true" 
+  style="display: block;"
+  [show-all]="true"
+  [original-size]="false"
+  [zoom]="1.0"
+  style="display: block; width: 45rem; height: 65vh;padding: 10px;"
+  (after-load-complete)="onPdfLoaded($event)">
+</pdf-viewer> -->
+<iframe [src]="pdfBlobUrl" width="500px" height="385px" style="border: none;"></iframe>
+
+</div>
+</div>

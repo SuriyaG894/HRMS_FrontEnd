@@ -5,6 +5,7 @@ import { HeaderComponent } from "../header/header.component";
 import { MainTabComponent } from "../main-tab/main-tab.component";
 import { SidebarService } from '../../services/sidebar.service';
 import { RouterModule, RouterOutlet } from '@angular/router';
+import { TabService } from '../../services/tab.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -14,7 +15,7 @@ import { RouterModule, RouterOutlet } from '@angular/router';
 })
 export class SidebarComponent {
 
-  constructor(private sideBarService:SidebarService){}
+  constructor(private sideBarService:SidebarService,private tabService:TabService){}
 
     page!:string;
 
@@ -29,6 +30,7 @@ export class SidebarComponent {
   setPage(page:string){
     this.page = page;
     console.log(this.page);
+    this.tabService.setTab(this.page);
   }
 
 }

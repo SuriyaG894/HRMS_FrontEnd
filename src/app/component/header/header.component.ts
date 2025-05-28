@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { AuthService } from '../../services/authService/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -14,6 +16,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
   day?: string;
   year?: number;
   private timerId?: any;
+  showDropdown = false;
+
+  constructor(private authService:AuthService,private route:Router){}
+
+toggleDropdown() {
+  this.showDropdown = !this.showDropdown;
+  console.log(this.showDropdown);
+}
+
+logout() {
+  // handle logout logic here
+  console.log('Logging out...');
+  this.authService.removeToken();
+  this.route.navigate(['/login']);
+}
 
   ngOnInit(): void {
     this.updateTime(); // Initial call

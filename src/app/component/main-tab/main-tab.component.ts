@@ -5,6 +5,7 @@ import { LeaveTabComponent } from "../leave-management-system/leave-tab/leave-ta
 import { LeaveDashboardComponent } from "../leave-management-system/leave-dashboard/leave-dashboard.component";
 import { HeaderComponent } from "../header/header.component";
 import { SidebarComponent } from "../sidebar/sidebar.component";
+import { TabService } from '../../services/tab.service';
 
 @Component({
   selector: 'app-main-tab',
@@ -18,14 +19,15 @@ role?:string[];
 
  @Input() toggle: boolean = false;
 @Input() page: string = '';
+tab:string = "home";
 
 isScrollable = true;
 
-  constructor(private router: Router) {
+  constructor(private router: Router,private tabService:TabService) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // Set scroll visibility based on route
-        const noScrollRoutes = ['/leave/policy', '/leave/summary','/leave/applyLeave'];
+        const noScrollRoutes = ['/leave/policy', '/leave/summary','/leave/applyLeave','/leave/leaveLog'];
         console.log(!noScrollRoutes.includes(event.urlAfterRedirects));
         this.isScrollable = !noScrollRoutes.includes(event.urlAfterRedirects);
       }
@@ -55,5 +57,10 @@ isScrollable = true;
       // console.log(this.role);
       console.log(this.page);
       console.log(this.toggle);
+      this.tabService.tab$.subscribe({
+        next:(response)=>{
+          this.tab = response;
+        }
+      })
   }
 }

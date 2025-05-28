@@ -5,7 +5,7 @@
   <app-sidebar></app-sidebar>
   <div class="main-content">
     <app-header></app-header>
-    <app-leave-tab></app-leave-tab>
+    <app-leave-tab *ngIf="tab=='leave'"></app-leave-tab>
     <div class="main-body" [ngClass]="{ 'scroll-enabled': isScrollable, 'scroll-disabled': !isScrollable }">
       <router-outlet></router-outlet>
     </div>

@@ -1,0 +1,19 @@
+export interface IPendingLeaveRequest{
+    leaveId:number,
+    empId:number,
+    leaveType:string,
+    startDate:string,
+    endDate:string,
+    totalLeaveDays:number,
+    reason:string,
+    approvalStatus:string,
+    approvedBy:number,
+    leaveDurationType:string,
+    appliedAt:string,
+    forwardedTo:string,
+    noonType?:string,
+    ApprovedAt?:string,
+    approverName?:string,
+    remarks?:string,
+    approvedAt?:string
+}

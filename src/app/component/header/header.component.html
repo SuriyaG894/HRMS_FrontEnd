@@ -1,28 +1,39 @@
 <div class="header">
     <div class="left">
-        <img class="logo" src="./assets/vista.png" alt="VistaFlow" >
+        <img class="logo" src="./assets/vista.png" alt="VistaFlow">
         <div class="heading">
             <span class="vista">ISTAFLOW</span>
             <span class="greeting">Hi, Suriya Ganesh</span>
             <span class="slogan">Tackle the day with intention and energy</span>
         </div>
-        
+
     </div>
     <div class="right">
         <div class="time">
-        <img class="clock" src="./assets/clock.png" alt="Clock">
-        <div style="display: inline-block;text-align: center;">
-        <span class="display-time">{{time | date:'hh:mm:ss'}}</span>
-        <span class="display-date">{{time | date:'dd/MM/yy'}}</span>
-        <span class="display-day">{{day}}</span>
+            <img class="clock" src="./assets/clock.png" alt="Clock">
+            <div style="display: inline-block;text-align: center;">
+                <span class="display-time">{{time | date:'hh:mm:ss'}}</span>
+                <span class="display-date">{{time | date:'dd/MM/yy'}}</span>
+                <span class="display-day">{{day}}</span>
+            </div>
         </div>
-    </div>
-    <div style="position: relative;">
-        <span style="position: absolute;right: 0px;background-color: #D9D9D9;border-radius: 50px;width: 18px;text-align: center;font-family: 'Inter',sans-serif;font-style: normal;font-weight: 800;">1</span>
-        <span class="material-symbols-outlined" style="font-size:40px;color:#0A1A86">notifications</span>
-    </div>
-        <div class="profiles">
-            <span class="material-symbols-outlined notificationss" style="font-size: 26px;color:#FFC729">person</span>
+        <div style="position: relative;">
+            <span
+                style="position: absolute;right: 0px;background-color: #D9D9D9;border-radius: 50px;width: 18px;text-align: center;font-family: 'Inter',sans-serif;font-style: normal;font-weight: 800;">1</span>
+            <span class="material-symbols-outlined" style="font-size:40px;color:#0A1A86">notifications</span>
         </div>
+        <div class="profiles" (click)="toggleDropdown()" style="position: relative; cursor: pointer;">
+            <span class="material-symbols-outlined notificationss"
+                style="font-size: 26px; color: #FFC729;">person</span>
+            <ng-container *ngIf="showDropdown">
+                <div style="position: absolute;width: 80px;font-size: 14px;right:0;background-color: #D9D9D9;height: 65px;z-index: 99999;">
+                    <a href="#" style="display: block;text-decoration: none;color:#0A1A86">Profile</a>
+                    <a href="#" style="display: block;text-decoration: none;color:#0A1A86">Settings</a>
+                    <a (click)="logout()">Logout</a>
+                </div>
+            </ng-container>
+        </div>
+
     </div>
+
 </div>
