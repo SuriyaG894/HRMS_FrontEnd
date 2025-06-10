@@ -17,6 +17,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   year?: number;
   private timerId?: any;
   showDropdown = false;
+  fullName!:string;
 
   constructor(private authService:AuthService,private route:Router){}
 
@@ -33,6 +34,7 @@ logout() {
 }
 
   ngOnInit(): void {
+    this.fullName = this.authService.decodeToken()['fullName'];
     this.updateTime(); // Initial call
     this.timerId = setInterval(() => {
       this.updateTime();

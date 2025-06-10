@@ -1,0 +1,77 @@
+.btn-alignment{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap:25px;
+    padding: 10px;
+}
+.btn {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* space between icon and text */
+    padding: 10px 16px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  .table-alignment{
+    padding: 10px;
+  }
+   thead th {
+        background-color: #0A1A86;
+        color: white;
+    }
+    tr>td{
+        text-align: center;
+        border-bottom: none;
+    }
+    tr>th{
+        text-align: center;
+        border-bottom:none ;
+    }
+
+    .pagination{
+      color:#0A1A86;
+      background-color: transparent;
+      border:none;
+    }
+
+    .btn-close{
+        color:white;
+    }
+
+    .modal-footer{
+        justify-content: center;
+    }
+
+    table tr td{
+        text-align:justify;
+    }
+
+   .tbl-title{
+    color:#248B59;
+    font-weight: 800;
+    font-size: 20px;
+   }
+
+
+   .tbl-body{
+    color:#0A1A86;
+    font-size:18px;
+    font-weight: 600;
+   }
+
+   table .btn-danger{
+        z-index: 9999;
+   }
+
+.always-visible-btn {
+    display: inline-block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    position: relative !important;
+    z-index: 9999 !important;
+}
+
+

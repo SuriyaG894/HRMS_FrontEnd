@@ -3,10 +3,11 @@ import { LeaveSummaryChartComponent } from "../leave-summary-chart/leave-summary
 import { CommonModule } from '@angular/common';
 import { SidebarService } from '../../../services/sidebar.service';
 import { LeaveTabComponent } from "../leave-tab/leave-tab.component";
+import { RouterModule, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-leave-dashboard',
-  imports: [LeaveSummaryChartComponent, CommonModule, LeaveTabComponent],
+  imports: [LeaveSummaryChartComponent, CommonModule, LeaveTabComponent,RouterOutlet, RouterModule],
   templateUrl: './leave-dashboard.component.html',
   styleUrl: './leave-dashboard.component.css'
 })

@@ -1,0 +1,149 @@
+<div style="width:100%">
+    <div class="btn-alignment">
+        <div>
+            <button class="btn btn-success"  data-bs-toggle="modal" data-bs-target="#filterModal">Filter <span class="material-symbols-outlined">filter_alt</span></button>
+        </div>
+        <div>
+            <button class="btn btn-primary" style="background-color: #0A1A86;color:white">Sort By <span class="material-symbols-outlined">swap_vert</span></button>
+        </div>
+    </div>
+
+    <div class="table-alignment">
+        <table class="table table-responsive table-bordered">
+            <thead>
+                <tr>
+                    <th>EmployeeId</th>
+                    <th>Employee Name</th>
+                    <th>Leave Type</th>
+                    <th>Duration</th>
+                    <th>Date Range</th>
+                    <th>Days</th>
+                    <th>FN/AN</th>
+                    <th>Applied On</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                    <th>Remarks</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let request of pagedData;let i = index">
+                    <td>{{request.empId}}</td>
+                    <td>{{request.appliedBy}}</td>
+                    <td>{{request.leaveType}}</td>
+                    <td>{{request.leaveDurationType}}</td>
+                    <td style="width: 100px;">
+                        {{ request.startDate === request.endDate
+                        ? (request.startDate|date:'dd-MM-yyyy')
+                        : (request.startDate|date:'dd-MM-yyyy') + ' - ' + (request.endDate|date:'dd-MM-yyyy')}}
+                    </td>
+                    <td>{{request.totalLeaveDays}}</td>
+                    <td>{{request.noonType}}</td>
+                    <td style="width: 100px;">{{request.appliedAt | date:'dd-MM-yyyy'}}</td>
+                    <td>{{request.reason}}</td>
+                    <td>{{request.approvalStatus}}</td>
+                    <td><input type="text" [value]="request.remarks" [ngClass]="{'warningColor':showWarning}" [(ngModel)]="request.remarks"/></td>
+                    <td style="width:100px">
+                        <!-- <button style="border: none;background-color: transparent;" *ngIf="showSaveBtn"><span
+                                class="material-symbols-outlined">save</span></button>
+                        <button style="border:none;background-color: transparent;" (click)="toggleBtn()"
+                            *ngIf="!showSaveBtn"><span class="material-symbols-outlined">edit_square</span></button> -->
+                            <button class="btn btn-success" style="padding: 5px;padding-bottom: 2px; display: inline-block;margin-right:5px" *ngIf="request.approvalStatus==='PENDING'" ><span class="material-symbols-outlined" (click)="approveRequest(i)" >thumb_up</span></button>
+                            <button class="btn btn-danger" style="padding: 5px;padding-bottom: 2px; display: inline-block;" *ngIf="request.approvalStatus==='PENDING'"><span class="material-symbols-outlined" (click)="rejectRequest(i)">thumb_down</span></button>
+                            <button class="btn btn-success" style="padding: 5px;padding-bottom: 2px; display: inline-block;margin-right:5px" *ngIf="request.approvalStatus==='CANCELLATION_PENDING'"><span class="material-symbols-outlined"  (click)="approveCancellationRequest(i)" >thumb_up</span></button>
+                            <button class="btn btn-danger" style="padding: 5px;padding-bottom: 2px; display: inline-block;" *ngIf="request.approvalStatus==='CANCELLATION_PENDING'"><span class="material-symbols-outlined" (click)="rejectCancellationRequest(i)">thumb_down</span></button>
+
+                    </td>
+                </tr>
+                <!-- <tr>
+                    <td>Sick</td>
+                    <td>Full Day</td>
+                    <td>22/05/2025 - 23/05/2025</td>
+                    <td>2</td>
+                    <td>-</td>
+                    <td>22/05/2025</td>
+                    <td>Approved</td>
+                    <td>Sreeranjini</td>
+                    <td>-</td>
+                    <td style="width:100px"><button class="btn btn-success">Cancel</button></td>
+                </tr> -->
+            </tbody>
+        </table>
+    </div>
+    <div style="display:flex;justify-content: space-between;">
+        <div style="display:flex;flex-direction: row;gap:10px;margin-left: 10px;">
+            <h6>Show</h6>
+            <select style="width:50px;height: 20px;" (change)="showSelectedPage($event)">
+                <option selected disabled></option>
+                <option *ngFor="let num of getRange(totalPages)" [value]="num">{{num}}</option>
+            </select>
+        </div>
+        <div style="display: flex;flex-direction: row;align-items: center;">
+            <button class="pagination" (click)="prevPage()"><span
+                    class="material-symbols-outlined">arrow_back_ios</span></button>
+            <h6>{{currentPage}}</h6>
+            <button style="margin-left: 10px;" (click)="nextPage()" class="pagination"><span
+                    class="material-symbols-outlined">arrow_forward_ios</span></button>
+        </div>
+    </div>
+</div>
+
+<!-- Filter Modal -->
+<div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Filter Leave Requests</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Employee Name</label>
+          <input type="text" class="form-control" [(ngModel)]="filters.employeeName">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Employee ID</label>
+          <input type="number" class="form-control" [(ngModel)]="filters.employeeId">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Duration</label>
+          <select class="form-select" [(ngModel)]="filters.duration">
+            <option value="">All</option>
+            <option value="FN">FN</option>
+            <option value="AN">AN</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Leave Type</label>
+          <select class="form-select" [(ngModel)]="filters.leaveType">
+            <option value="">All</option>
+            <option *ngFor="let type of leaveTypes" [value]="type">{{type}}</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Status</label>
+          <select class="form-select" [(ngModel)]="filters.status">
+            <option value="">All</option>
+            <option value="PENDING">PENDING</option>
+            <option value="CANCELLATION_PENDING">CANCELLATION_PENDING</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Applied On</label>
+          <input type="date" class="form-control" [(ngModel)]="filters.appliedOn">
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary" (click)="applyFilters();" data-bs-dismiss="modal">Apply</button>
+      </div>
+    </div>
+  </div>
+</div>

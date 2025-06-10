@@ -15,5 +15,5 @@ export interface IPendingLeaveRequest{
     ApprovedAt?:string,
     approverName?:string,
     remarks?:string,
-    approvedAt?:string
+    appliedBy?:string
 }

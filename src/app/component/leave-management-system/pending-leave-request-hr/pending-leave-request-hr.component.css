@@ -26,9 +26,17 @@
         text-align: center;
         border-bottom: none;
     }
+    tr>th{
+        text-align: center;
+        border-bottom:none ;
+    }
 
     .pagination{
       color:#0A1A86;
       background-color: transparent;
       border:none;
+    }
+
+    .warningColor{
+      border-color: red;
     }

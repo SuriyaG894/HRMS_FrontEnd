@@ -1,85 +1,133 @@
-
 <div class="page-container">
   <div class="form-container">
-    <form>
+    <form [formGroup]="leaveForm" (ngSubmit)="submitForm()">
+
       <!-- Leave Type Select -->
       <div class="form-group selectfield">
         <h5>Select Leave Type</h5>
         <span class="material-symbols-outlined dropdown-icon">arrow_drop_down</span>
-        <select class="form-control">
-          <option selected>Select Leave Type</option>
-          <option>CASUAL_LEAVE</option>
-          <option>SICK_LEAVE</option>
-          <option>MARRIAGE</option>
+        <select class="form-control" formControlName="leaveType">
+          <option value="">Select Leave Type</option>
+          <option value="EARNED_LEAVE">EARNED LEAVE</option>
+          <option value="PATERNITY">PATERNITY</option>
+          <option value="MATERNITY">MATERNITY</option>
+          <option value="ADVANCE_LEAVE">ADVANCE LEAVE</option>
+          <option value="LOP">LOP</option>
         </select>
       </div>
 
-      <!-- Leave Duration Radio -->
-      <h5>Select Leave Duration</h5>
-      <div class="d-flex gap-5">
-        <div class="custom-radio">
-          <input type="radio" id="rect1" name="customRectRadio" checked />
-          <label for="rect1">Full Day</label>
-        </div>
-        <div class="custom-radio">
-          <input type="radio" id="rect2" name="customRectRadio" />
-          <label for="rect2">Half Day</label>
-        </div>
-      </div>
-
-      <!-- Date Labels -->
-      <div class="d-flex date-labels">
-        <ng-container *ngIf="showDate">
-          <h5>Start Date</h5>
-          <h5 style="margin-left: 50px;">End Date</h5>
-        </ng-container>
-        <ng-container *ngIf="!showDate">
-          <h5>Date</h5>
-        </ng-container>
-      </div>
-
-      <!-- Date Fields -->
-      <div class="d-flex date-fields">
-        <ng-container *ngIf="showDate">
-          <input
-            type="date"
-            [(ngModel)]="selectedDate1"
-            [ngClass]="{ 'hide-placeholder': !selectedDate1 }"
-            name="startDate"
-          />
-          <input
-            type="date"
-            [(ngModel)]="selectedDate2"
-            [ngClass]="{ 'hide-placeholder': !selectedDate2 }"
-            name="endDate"
-          />
-        </ng-container>
-        <ng-container *ngIf="!showDate">
-          <input
-            type="date"
-            [(ngModel)]="selectedDate1"
-            [ngClass]="{ 'hide-placeholder': !selectedDate1 }"
-            name="startDate"
-          />
-          <div class="fn-an-radios">
-            <label>
-              <input type="radio" name="halfDaySession" />
-              <span>FN</span>
-            </label>
-            <label>
-              <input type="radio" name="halfDaySession" />
-              <span>AN</span>
-            </label>
+      <!-- Maternity Leave Fields -->
+      <div *ngIf="leaveForm.get('leaveType')?.value === 'MATERNITY'">
+        <h5 class="section-header">Maternity Leave Details</h5>
+        <div class="row">
+          <div class="col-6">
+            <p>Is this for adoption?</p>
+            <div class="d-flex gap-4">
+              <div class="custom-radio">
+                <input type="radio" id="adoptYes" value="true" formControlName="adopted" />
+                <label for="adoptYes">Yes</label>
+              </div>
+              <div class="custom-radio">
+                <input type="radio" id="adoptNo" value="false" formControlName="adopted" />
+                <label for="adoptNo">No</label>
+              </div>
+            </div>
           </div>
-        </ng-container>
+
+          <div class="col-6" *ngIf="leaveForm.get('adopted')?.value === 'true'">
+            <p>Child Age (If adopted)</p>
+            <input type="text" formControlName="adoptedChildAgeInMonths" class="form-control" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-8">
+            <p>Expected Delivery/Adoption Date</p>
+            <input type="date" formControlName="expectedDateOfDelivery" class="form-control" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-6">
+            <p>Start Date</p>
+            <input type="date" formControlName="startDate" class="form-control" />
+          </div>
+          <div class="col-6">
+            <p>End Date</p>
+            <input type="date" formControlName="endDate" class="form-control" />
+          </div>
+        </div>
       </div>
 
-      <!-- Reason -->
-      <h5>Reason</h5>
-      <textarea class="reason-textarea"></textarea>
-      <div style="text-align: center;">
-        <button class="btn" style="background-color:#0A1A86;color:#ffffff">Submit For Approval</button>
+      <!-- Non-Maternity Leave Fields -->
+      <div *ngIf="leaveForm.get('leaveType')?.value !== 'MATERNITY'">
+        <h5>Select Leave Duration Type</h5>
+        <div class="d-flex gap-5">
+          <div class="custom-radio">
+            <input type="radio" id="fullDay" value="FULL_DAY" formControlName="leaveDurationType" />
+            <label for="fullDay">Full Day</label>
+          </div>
+          <div class="custom-radio" *ngIf="leaveForm.get('leaveType')?.value !== 'MARRIAGE'">
+            <input type="radio" id="halfDay" value="HALF_DAY" formControlName="leaveDurationType"  />
+            <label for="halfDay">Half Day</label>
+          </div>
+        </div>
+
+        <div class="d-flex date-labels">
+          <ng-container *ngIf="leaveForm.get('leaveDurationType')?.value === 'FULL_DAY'">
+            <h5>Start Date</h5>
+            <h5 style="margin-left: 50px;">End Date</h5>
+          </ng-container>
+          <ng-container *ngIf="leaveForm.get('leaveDurationType')?.value === 'HALF_DAY'">
+            <h5>Date</h5>
+          </ng-container>
+        </div>
+
+        <div class="d-flex date-fields">
+          <ng-container *ngIf="leaveForm.get('leaveDurationType')?.value === 'FULL_DAY'">
+            <input type="date" [ngClass]="{'hide-placeholder':!leaveForm.get('startDate')?.value}" formControlName="startDate" />
+            <input type="date" [ngClass]="{'hide-placeholder':!leaveForm.get('endDate')?.value}" formControlName="endDate" />
+          </ng-container>
+
+          <ng-container *ngIf="leaveForm.get('leaveDurationType')?.value === 'HALF_DAY'">
+            <input type="date" formControlName="startDate" />
+            <div class="fn-an-radios">
+              <label>
+                <input type="radio" value="FN" formControlName="noonType" />
+                <span>FN</span>
+              </label>
+              <label>
+                <input type="radio" value="AN" formControlName="noonType" />
+                <span>AN</span>
+              </label>
+            </div>
+          </ng-container>
+        </div>
+
+        <div *ngIf="leaveForm.errors?.['dateRangeInvalid'] && leaveForm.touched" class="error">
+          Start Date must be before or equal to End Date.
+        </div>
+
+        <h5>Reason</h5>
+        <textarea class="reason-textarea" formControlName="reason" required></textarea>
+        <span *ngIf="leaveForm.get('reason')?.errors?.['required'] && leaveForm.get('reason')?.touched">
+          Reason is required.
+        </span>
+        <span *ngIf="leaveForm.get('reason')?.errors?.['minlength'] && leaveForm.get('reason')?.touched">
+          Reason must be at least 3 characters long.
+        </span>
+        <span *ngIf="leaveForm.get('reason')?.errors?.['pattern'] && leaveForm.get('reason')?.touched">
+          Reason cannot be only spaces.
+        </span>
       </div>
+
+      <div style="text-align: center;">
+        <button class="btn" style="background-color:#0A1A86;color:#ffffff" type="submit" [disabled]="leaveForm.invalid">
+          Submit For Approval
+        </button>
+      </div>
+
     </form>
   </div>
 </div>
+

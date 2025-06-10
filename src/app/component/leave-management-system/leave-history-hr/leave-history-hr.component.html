@@ -1,0 +1,268 @@
+<div style="width:100%">
+    <div class="btn-alignment">
+        <div style="position: relative;">
+            <span style="position: absolute;z-index: 100;left: 170px;top:10px"
+                class="material-symbols-outlined">search</span>
+            <input type="text" style="padding:8px;border: 2px solid #0A1A86;" placeholder="Search Employee"
+                class="form-control" />
+        </div>
+        <div>
+            <button class="btn btn-success">Filter <span class="material-symbols-outlined">filter_alt</span></button>
+        </div>
+        <div>
+            <button class="btn" style="background-color: #0A1A86;color:white">Sort By <span
+                    class="material-symbols-outlined">swap_vert</span></button>
+        </div>
+    </div>
+
+    <div class="table-alignment">
+        <table class="table table-responsive table-bordered">
+            <thead>
+                <tr>
+                    <th>EmployeeId</th>
+                    <th>Employee Name</th>
+                    <th>Leave Type</th>
+                    <th>Date Range</th>
+                    <th>Days</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let request of pagedData;let i = index">
+                    <td>{{request.empId}}</td>
+                    <td>{{request.appliedBy}}</td>
+                    <td>{{request.leaveType}}</td>
+                    <td style="width: 100px;">
+                        {{ request.startDate === request.endDate
+                        ? (request.startDate|date:'dd-MM-yyyy')
+                        : (request.startDate|date:'dd-MM-yyyy') + ' - ' + (request.endDate|date:'dd-MM-yyyy')}}
+                    </td>
+                    <td>{{request.totalLeaveDays}}</td>
+                    <td>{{request.approvalStatus}}</td>
+                    <!-- <td><input type="text" [value]="request.remarks" [(ngModel)]="request.remarks" [disabled]="request.remarks != null"/></td> -->
+                    <td
+                        style="width:100px;display: flex;flex-direction: row;justify-content: center;align-items: center;">
+
+                        <button class="btn" style="width: 10px;" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                            (click)="openModal(request,i)"><span class="material-symbols-outlined"
+                                style="color:black">visibility</span></button>
+                        <button class="btn"><span class="material-symbols-outlined" style="color:black"
+                                *ngIf="request.approvalStatus === 'APPROVED'">edit_square</span></button>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <div style="display:flex;justify-content: space-between;">
+        <div style="display:flex;flex-direction: row;gap:10px;margin-left: 10px;">
+            <h6>Show</h6>
+            <select style="width:50px;height: 20px;" (change)="showSelectedPage($event)">
+                <option selected disabled></option>
+                <option *ngFor="let num of getRange(totalPages)" [value]="num">{{num}}</option>
+            </select>
+        </div>
+        <div style="display: flex;flex-direction: row;align-items: center;">
+            <button class="pagination" (click)="prevPage()"><span
+                    class="material-symbols-outlined">arrow_back_ios</span></button>
+            <h6>{{currentPage}}</h6>
+            <button style="margin-left: 10px;" (click)="nextPage()" class="pagination"><span
+                    class="material-symbols-outlined">arrow_forward_ios</span></button>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="z-index:9999">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #0A1A86;color: white;">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">View Leave Log</h1>
+                <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+            </div>
+            <div class="modal-body">
+                <div style="width:100%;background-color:#D9D9D940 ;padding: 30px;">
+                    <div style="display: flex;flex-direction:row;justify-content: flex-end;">
+                        <button class="btn" *ngIf="selectedRequest?.approvalStatus==='APPROVED'"
+                            (click)="openEditModal()" data-bs-toggle="modal" data-bs-target="#historyEditModal">
+                            <span class="material-symbols-outlined"
+                                style="color:black;font-size:32px">edit_square</span>
+                        </button>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <td class="tbl-title">Employee ID:</td>
+                            <td class="tbl-body">{{ selectedRequest?.empId ?? '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="tbl-title">Employee Name:</td>
+                            <td class="tbl-body">{{ selectedRequest?.appliedBy ?? '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="tbl-title">LeaveType:</td>
+                            <td class="tbl-body">{{ selectedRequest?.leaveType ?? '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="tbl-title">Duration:</td>
+                            <td class="tbl-body">{{ selectedRequest?.leaveDurationType ?? '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="tbl-title">Date Range:</td>
+                            <td class="tbl-body">
+                                {{
+                                selectedRequest?.startDate === selectedRequest?.endDate
+                                ? (selectedRequest?.startDate | date: 'dd-MM-yyyy')
+                                : (selectedRequest?.startDate | date: 'dd-MM-yyyy') + ' - ' + (selectedRequest?.endDate
+                                | date: 'dd-MM-yyyy')
+                                }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tbl-title">Days:</td>
+                            <td class="tbl-body">{{ selectedRequest?.totalLeaveDays ?? '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="tbl-title">FN/AN:</td>
+                            <td class="tbl-body">{{ selectedRequest?.noonType ?? '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="tbl-title">Applied On:</td>
+                            <td class="tbl-body">{{ selectedRequest?.appliedAt | date: 'dd-MM-yyyy' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="tbl-title">Reason:</td>
+                            <td class="tbl-body">{{ selectedRequest?.reason ?? '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="tbl-title">Status:</td>
+                            <td class="tbl-body">{{ selectedRequest?.approvalStatus ?? '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="tbl-title">Remarks:</td>
+                            <td class="tbl-body">{{ selectedRequest?.remarks ?? '-' }}</td>
+                        </tr>
+
+                    </table>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div style="display:flex;justify-content: center;">
+                    <button class="btn" data-bs-dismiss="modal"
+                        style="background-color: #0A1A86;color:white;padding-left: 20px;padding-right: 20px;">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="historyEditModal" tabindex="-1" aria-labelledby="historyEditModal" aria-hidden="true">
+    <div class="modal-dialog" style="z-index:9999">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #0A1A86;color: white;">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Leave Log</h1>
+                <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+            </div>
+            <div class="modal-body">
+                <div style="width:100%;background-color:#D9D9D940 ;padding: 30px;">
+                    <table class="table">
+                        <tr>
+                            <td class="tbl-title">Employee ID:</td>
+                            <td class="tbl-body">{{ selectedRequest?.empId ?? '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="tbl-title">Employee Name:</td>
+                            <td class="tbl-body">{{ selectedRequest?.appliedBy ?? '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="tbl-title">LeaveType:</td>
+                            <td class="tbl-body">{{ selectedRequest?.leaveType ?? '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="tbl-title">Duration:</td>
+                            <td class="tbl-body">{{ selectedRequest?.leaveDurationType ?? '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="tbl-title">Date Range:</td>
+                            <td class="tbl-body">
+                                {{
+                                selectedRequest?.startDate === selectedRequest?.endDate
+                                ? (selectedRequest?.startDate | date: 'dd-MM-yyyy')
+                                : (selectedRequest?.startDate | date: 'dd-MM-yyyy') + ' - ' + (selectedRequest?.endDate
+                                | date: 'dd-MM-yyyy')
+                                }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tbl-title">Days:</td>
+                            <td class="tbl-body">{{ selectedRequest?.totalLeaveDays ?? '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="tbl-title">FN/AN:</td>
+                            <td class="tbl-body">{{ selectedRequest?.noonType ?? '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="tbl-title">Applied On:</td>
+                            <td class="tbl-body">{{ selectedRequest?.appliedAt | date: 'dd-MM-yyyy' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="tbl-title">Reason:</td>
+                            <td class="tbl-body">{{ selectedRequest?.reason ?? '-' }}</td>
+                        </tr>
+                        <tr style="z-index: 10000;">
+                            <td class="tbl-title">Status:</td>
+                            <td class="tbl-body">
+                                <span style="padding: 0px;color:#0A1A86"
+                                    *ngIf="selectedRequest?.approvalStatus!='APPROVED'">{{selectedRequest?.approvalStatus}}</span>
+                                <button class="btn always-visible-btn" data-bs-toggle="modal" data-bs-target="#cancellationRequest"
+                                style="background-color: red;padding: 4px;padding-bottom: 1px;"
+                                    *ngIf="selectedRequest?.approvalStatus === 'APPROVED'">
+                                    <span class="material-symbols-outlined" style="font-size: 20px;color: white;">
+                                        thumb_down
+                                    </span>
+                                </button>
+                        </td>
+                        </tr>
+                        <tr>
+                            <td class="tbl-title">Remarks:</td>
+                            <td class="tbl-body">{{ selectedRequest?.remarks ?? '-' }}</td>
+                        </tr>
+
+                    </table>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div style="display:flex;justify-content: center;">
+                    <button class="btn" data-bs-dismiss="modal"
+                        style="background-color: #0A1A86;color:white;padding-left: 20px;padding-right: 20px;">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="cancellationRequest" tabindex="-1" aria-labelledby="cancellationRequest" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="cancellationRequest">Filter</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="cancellationForm" >
+            <div class="form-group">
+                <label>Remark</label>
+                <input type="text" class="form-control" formControlName="remark" />
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>
+        <button type="button" class="btn btn-primary" [disabled]="cancellationForm.invalid" data-bs-dismiss="modal" (click)="cancelApprovedLeave()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>

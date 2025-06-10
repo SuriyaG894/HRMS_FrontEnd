@@ -1,7 +1,9 @@
-<nav class="navbar navbar-expand-lg navbar-light flex-column" [ngClass]="{'toggleChange':toggle}" style="background-color: #0A1A86;color:#CCCCCC">
+<nav class="navbar navbar-expand-lg navbar-light flex-column" [ngClass]="{'toggleChange':toggle}"
+  style="background-color: #0A1A86;color:#CCCCCC">
   <!-- Legend/Heading on Top -->
   <div class="w-100 py-0">
-    <h6 class="mb-0" style="margin-left: 20px; display: inline;font-family:'Inter',sans-serif ;font-weight: 800;">Leaves & WFH</h6>
+    <h6 class="mb-0" style="margin-left: 20px; display: inline;font-family:'Inter',sans-serif ;font-weight: 800;">Leaves
+      & WFH</h6>
     <!-- <h5 class="mb-0" style="margin-left: 20px; display: inline;float:right;margin-right: 18px;">{{LoggedUsername | titlecase}}</h5> -->
   </div>
 
@@ -18,26 +20,36 @@
     <!-- Collapsible nav items -->
     <div class="collapse navbar-collapse d-flex justify-content-between align-items-center" id="navbarNavDropdown">
       <!-- Left menu items -->
-      <ul class="navbar-nav d-flex flex-row gap-3" >
-        <li class="nav-item" >
+      <ul class="navbar-nav d-flex flex-row gap-3">
+        <li class="nav-item" *ngIf="role?.includes('USER')">
           <a class="nav-link" routerLink="/leave/applyLeave"
-          [ngClass]="{ 'link-indented': !toggle, 'link-default': toggle }" routerLinkActive="active">Apply Leave</a>
+            [ngClass]="{ 'link-indented': !toggle, 'link-default': toggle }" routerLinkActive="active">Apply Leave</a>
         </li>
         <!-- <li class="nav-item" >
           <a class="nav-link" routerLink="leave/applyWfh"
            routerLinkActive="active">Apply WFH</a>
         </li> -->
-        <li class="nav-item" >
-          <a class="nav-link" routerLink="leave/leaveLog"
-          routerLinkActive="active">Leave Log</a>
+        <li class="nav-item" *ngIf="role?.includes('USER')">
+          <a class="nav-link" routerLink="leave/leaveLog" routerLinkActive="active">Leave Log</a>
         </li>
         <!-- <li class="nav-item" >
           <a class="nav-link" routerLink="leave/wfhLog"
           routerLinkActive="active">WFH Log</a>
         </li> -->
-        <li class="nav-item" >
-          <a class="nav-link" routerLink="leave/policy"
-          routerLinkActive="active">Leave Policy</a>
+        <li class="nav-item" *ngIf="role?.includes('USER')">
+          <a class="nav-link" routerLink="leave/policy" routerLinkActive="active">Leave Policy</a>
+        </li>
+        <li class="nav-item" *ngIf="role?.includes('REPORTING_MANAGER')">
+          <a class="nav-link" routerLink="leave/pendingRequestRM" routerLinkActive="active">Pending Request</a>
+        </li>
+        <li class="nav-item" *ngIf="role?.includes('REPORTING_MANAGER')">
+          <a class="nav-link" routerLink="leave/leaveHistoryRM" routerLinkActive="active">Leave Approval History</a>
+        </li>
+        <li class="nav-item" *ngIf="role?.includes('HR_MANAGER')">
+          <a class="nav-link" routerLink="leave/leaveHistoryHR" routerLinkActive="active">Leave Approval History</a>
+        </li>
+        <li class="nav-item" *ngIf="role?.includes('HR_MANAGER')">
+          <a class="nav-link" routerLink="leave/pendingRequestHR" routerLinkActive="active">Pending Request</a>
         </li>
       </ul>
     </div>

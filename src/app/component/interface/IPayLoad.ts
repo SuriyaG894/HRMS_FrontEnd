@@ -1,6 +1,8 @@
 export interface IPayLoad{
-    roles:string,
+    roles:[],
     empId:number,
+    rmId:number,
+    fullName:string,
     exp:number,
     iat:number,
     sub:string

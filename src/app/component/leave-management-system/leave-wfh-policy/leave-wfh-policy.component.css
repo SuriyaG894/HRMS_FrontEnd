@@ -12,3 +12,18 @@
     align-items: center;
     justify-content: center;
 }
+
+.pdfdisplay{
+    width:500px; 
+    height:385px;
+    border:none;
+    
+}
+
+@media (min-width: 1000px) and (max-width: 5000px) {
+  .pdfdisplay {
+    width: 900px;
+    height: 578px;
+  }
+}
+

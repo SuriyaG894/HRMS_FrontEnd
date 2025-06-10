@@ -19,7 +19,7 @@ role?:string[];
 
  @Input() toggle: boolean = false;
 @Input() page: string = '';
-tab:string = "home";
+tab:any;
 
 isScrollable = true;
 
@@ -60,6 +60,9 @@ isScrollable = true;
       this.tabService.tab$.subscribe({
         next:(response)=>{
           this.tab = response;
+          if(localStorage.getItem('page') !=null){
+            this.tab = localStorage.getItem('page');
+          }
         }
       })
   }

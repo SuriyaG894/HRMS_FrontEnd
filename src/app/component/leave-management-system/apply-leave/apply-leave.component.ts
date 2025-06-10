@@ -1,167 +1,159 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { ILeaveApply } from '../../interface/ILeaveApply';
+import { LeaveService } from '../../../services/leave-management-services/leave.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-apply-leave',
-  imports: [FormsModule,ReactiveFormsModule,CommonModule],
+  standalone: true,
+  imports: [CommonModule,FormsModule,ReactiveFormsModule],
   templateUrl: './apply-leave.component.html',
-  styleUrl: './apply-leave.component.css'
+  styleUrls: ['./apply-leave.component.css']
 })
-export class ApplyLeaveComponent {
-
-
-  selectedDate1: string = '';
-
-  toggle:boolean = false;
-
-selectedDate2: string = '';
-showDate:boolean = false;
-
+export class ApplyLeaveComponent implements OnInit {
   leaveForm!: FormGroup;
-  showNoonType = false;
-  showEndDate = false;
+  primaryApproverName!:string;
 
-  leaveTypes = ['CASUAL_LEAVE', 'SICK_LEAVE', 'MARRIAGE'];
-  durationTypes = ['FULL_DAY', 'HALF_DAY'];
-  noonTypes = ['FN', 'AN'];
-
-  // Flag to prevent recursive loops when updating form controls programmatically
-  private updatingForm = false;
-
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private leaveService: LeaveService) {}
 
   ngOnInit(): void {
-    this.leaveForm = this.fb.group({
-      leaveType: [null, Validators.required],
-      leaveDurationType: [null, Validators.required],
-      noonType: [null],
-      startDate: [null, Validators.required],
-      endDate: [null],
-      reason: [null, Validators.required],
-    }, { validators: this.leaveDateValidator() });
+    this.leaveForm = this.fb.group(
+      {
+        leaveType: ['', Validators.required],
+        leaveDurationType: ['FULL_DAY'],
+        startDate: ['', Validators.required],
+        endDate: [''],
+        noonType: [null],
+        reason: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/\S+/)]],
+        adopted: ['false'],
+        adoptedChildAgeInMonths: ['0'],
+        expectedDateOfDelivery: [''],
+      },
+      { validators: this.dateRangeValidator('startDate', 'endDate') }
+    );
 
-    this.leaveForm.valueChanges.subscribe(() => {
-      if (!this.updatingForm) {
-        this.safeUpdateFormVisibility();
+    this.handleDynamicValidation();
+
+  }
+
+  handleDynamicValidation(): void {
+    const leaveTypeCtrl = this.leaveForm.get('leaveType');
+    const durationCtrl = this.leaveForm.get('leaveDurationType');
+    const reasonCtrl = this.leaveForm.get('reason');
+    const startDateCtrl = this.leaveForm.get('startDate');
+    const endDateCtrl = this.leaveForm.get('endDate');
+    const noonTypeCtrl = this.leaveForm.get('noonType');
+    const adoptedCtrl = this.leaveForm.get('adopted');
+    const adoptedChildAgeCtrl = this.leaveForm.get('adoptedChildAgeInMonths');
+    const expectedDateCtrl = this.leaveForm.get('expectedDateOfDelivery');
+
+    leaveTypeCtrl?.valueChanges.subscribe(type => {
+      // Reset everything
+      durationCtrl?.enable();
+      durationCtrl?.clearValidators();
+      reasonCtrl?.setValidators([Validators.required, Validators.minLength(3), Validators.pattern(/\S+/)]);
+      expectedDateCtrl?.clearValidators();
+      adoptedCtrl?.clearValidators();
+      adoptedChildAgeCtrl?.clearValidators();
+      adoptedChildAgeCtrl?.setValue('');
+      endDateCtrl?.clearValidators();
+
+      // Special handling for ADVANCE_LEAVE
+      if (type === 'ADVANCE_LEAVE') {
+        durationCtrl?.setValue('FULL_DAY');
+        durationCtrl?.disable();
       }
+
+      // Special handling for MATERNITY
+      if (type === 'MATERNITY') {
+        durationCtrl?.setValue('FULL_DAY');
+        reasonCtrl?.setValue('MATERNITY');
+        reasonCtrl?.clearValidators(); // optional
+        expectedDateCtrl?.setValidators(Validators.required);
+        adoptedCtrl?.setValidators(Validators.required);
+        endDateCtrl?.setValidators(Validators.required);
+        noonTypeCtrl?.disable();
+        // Auto-calculate endDate when startDate is selected
+        startDateCtrl?.valueChanges.subscribe(startDate => {
+          if (startDate) {
+            const start = new Date(startDate);
+            const end = new Date(start);
+            end.setDate(start.getDate() + 134); // 135 days total
+            const formattedEnd = end.toISOString().split('T')[0];
+            endDateCtrl?.setValue(formattedEnd);
+          }
+        });
+      } else {
+        durationCtrl?.enable();
+      }
+
+      reasonCtrl?.updateValueAndValidity();
+      durationCtrl?.updateValueAndValidity();
+      startDateCtrl?.updateValueAndValidity();
+      endDateCtrl?.updateValueAndValidity();
+      expectedDateCtrl?.updateValueAndValidity();
+      adoptedCtrl?.updateValueAndValidity();
+      adoptedChildAgeCtrl?.updateValueAndValidity();
     });
 
-    this.safeUpdateFormVisibility();
-  }
-
-  private safeUpdateFormVisibility(): void {
-    this.updatingForm = true;
-
-    const leaveType = this.leaveForm.get('leaveType')?.value;
-    const durationType = this.leaveForm.get('leaveDurationType')?.value;
-
-    const leaveDurationCtrl = this.leaveForm.get('leaveDurationType');
-    const noonTypeCtrl = this.leaveForm.get('noonType');
-    const endDateCtrl = this.leaveForm.get('endDate');
-
-    this.showNoonType = false;
-    this.showEndDate = false;
-
-    if (leaveType === 'MARRIAGE') {
-      // Force FULL_DAY for MARRIAGE and disable selection
-      if (leaveDurationCtrl?.value !== 'FULL_DAY') {
-        leaveDurationCtrl?.setValue('FULL_DAY', { emitEvent: false });
-      }
-      leaveDurationCtrl?.disable();
-      this.showEndDate = true;
-    } else {
-      leaveDurationCtrl?.enable();
-
-      if (durationType === 'HALF_DAY' && (leaveType === 'CASUAL_LEAVE' || leaveType === 'SICK_LEAVE')) {
-        this.showNoonType = true;
-        this.showEndDate = false;
-      } else if (durationType === 'FULL_DAY') {
-        this.showNoonType = false;
-        this.showEndDate = true;
+    this.leaveForm.get('leaveDurationType')?.valueChanges.subscribe(duration => {
+      if (duration === 'HALF_DAY') {
+        endDateCtrl?.disable();
+        endDateCtrl?.reset();
+        noonTypeCtrl?.setValidators(Validators.required);
       } else {
-        // Default fallback
-        this.showNoonType = false;
-        this.showEndDate = false;
+        endDateCtrl?.enable();
+        noonTypeCtrl?.clearValidators();
       }
-    }
 
-    // Set validators conditionally
-    noonTypeCtrl?.setValidators(this.showNoonType ? Validators.required : null);
-    endDateCtrl?.setValidators(this.showEndDate ? Validators.required : null);
+      endDateCtrl?.updateValueAndValidity();
+      noonTypeCtrl?.updateValueAndValidity();
+    });
 
-    noonTypeCtrl?.updateValueAndValidity({ emitEvent: false });
-    endDateCtrl?.updateValueAndValidity({ emitEvent: false });
-
-    this.updatingForm = false;
+    adoptedCtrl?.valueChanges.subscribe(isAdopted => {
+      if (isAdopted === true) {
+        adoptedChildAgeCtrl?.setValidators(Validators.required);
+         startDateCtrl?.valueChanges.subscribe(startDate => {
+          if (startDate) {
+            const start = new Date(startDate);
+            const end = new Date(start);
+            end.setDate(start.getDate() + 84); // 84 days total
+            const formattedEnd = end.toISOString().split('T')[0];
+            endDateCtrl?.setValue(formattedEnd);
+          }
+        });
+      } else {
+        adoptedChildAgeCtrl?.clearValidators();
+        adoptedChildAgeCtrl?.setValue('0');
+      }
+      adoptedChildAgeCtrl?.updateValueAndValidity();
+    });
   }
 
-  private leaveDateValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const leaveType = control.get('leaveType')?.value;
-      const startDateStr = control.get('startDate')?.value;
-      const endDateStr = control.get('endDate')?.value;
-
-      if (!startDateStr) return null; // Required validator handles empty
-
-      const today = new Date();
-      today.setHours(0, 0, 0, 0); // normalize
-
-      const startDate = new Date(startDateStr);
-      startDate.setHours(0, 0, 0, 0);
-
-      const endDate = endDateStr ? new Date(endDateStr) : null;
-      if (endDate) endDate.setHours(0, 0, 0, 0);
-
-      const errors: ValidationErrors = {};
-
-      // 1. For leave types except SICK_LEAVE, dates must be today or future
-      if (leaveType && leaveType !== 'SICK_LEAVE') {
-        if (startDate < today) {
-          errors['startDatePast'] = 'Start date cannot be in the past';
-        }
-        if (endDate && endDate < today) {
-          errors['endDatePast'] = 'End date cannot be in the past';
-        }
-      }
-
-      // 2. startDate cannot be after endDate (if endDate exists)
-      if (endDate && startDate > endDate) {
-        errors['startAfterEnd'] = 'Start date cannot be after end date';
-      }
-
-      return Object.keys(errors).length ? errors : null;
+  dateRangeValidator(startKey: string, endKey: string): ValidatorFn {
+    return (group: AbstractControl): ValidationErrors | null => {
+      const start = group.get(startKey)?.value;
+      const end = group.get(endKey)?.value;
+      if (!start || !end) return null;
+      return new Date(start) <= new Date(end) ? null : { dateRangeInvalid: true };
     };
   }
 
-  onSubmit(): void {
-    if (this.leaveForm.invalid) {
+  submitForm(): void {
+    if (this.leaveForm.valid) {
+      this.leaveService.applyLeave(this.leaveForm.value).subscribe({
+        next: res => {
+          Swal.fire('Leave Status', res.message, 'success');
+          this.leaveForm.reset();
+        },
+        error: err => {
+          Swal.fire('Leave Status', err.error?.message, 'error');
+        }
+      });
+    } else {
       this.leaveForm.markAllAsTouched();
-      return;
     }
-
-    console.log('Form Submitted:', this.leaveForm.value);
-    // Call your API here
-//     this.leaveApplyService.applyLeave(this.leaveForm.value).subscribe({
-//       next:(response)=>{
-//         console.log();
-//         Swal.fire({
-//   title: "Leave Status",
-//   text: response.message,
-//   icon: "success"
-// });
-        this.leaveForm.reset()
-//       },
-//       error:(error)=>{
-//         console.log(error)
-//         Swal.fire({
-//   title: "Leave Status",
-//   text: error.error,
-//   icon: "error"
-// });
-    //   }
-    // })    
   }
-
 }

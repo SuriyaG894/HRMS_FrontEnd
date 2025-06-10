@@ -1,34 +1,39 @@
-<div style="width:100%">
-    <div class="btn-alignment">
-        <div>
-        <button class="btn btn-success">Filter <span class="material-symbols-outlined">filter_alt</span></button>
-        </div>
-        <div>
-        <button class="btn btn-primary">Sort By <span class="material-symbols-outlined">swap_vert</span></button>
-        </div>
-        <div>
-        <button class="btn btn-success">Export as Xlsx/CSV <span class="material-symbols-outlined">download</span></button>
-        </div>
+<div style="width:100%;">
+  <div class="btn-alignment">
+    <div>
+      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Filter <span class="material-symbols-outlined">filter_alt</span></button>
     </div>
+    <div>
+      <button class="btn btn-primary" style="background-color: #0A1A86;color:white">Sort By <span class="material-symbols-outlined">swap_vert</span></button>
+    </div>
+    <div>
+      <button class="btn btn-success">Export<span class="material-symbols-outlined">download</span></button>
+    </div>
+  </div>
 
-    <div class="table-alignment">
-        <table class="table table-responsive table-bordered">
-            <thead >
-                 <tr>
-                    <th>Leave type</th>
-                    <th>Duration</th>
-                    <th>Date Range</th>
-                    <th>Days</th>
-                    <th>FN/AN</th>
-                    <th>Applied On</th>
-                    <th>Status</th>
-                    <th>Approved By</th>
-                    <th>Remarks</th>
-                    <th>Action</th>
-                 </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let leave of pagedData">
+  <div style="display: flex;justify-content: flex-start;margin-left:10px;">
+    <h5 style="color:#248B59">Primary Approver :&nbsp;</h5>
+    <h5 style="color:#0A1A86">{{primaryApproverName}}</h5>
+  </div>
+
+  <div style="max-height: 270px; overflow-y: auto;">
+  <table class="table table-bordered" style="margin-bottom: 0;">
+    <thead class="table-header" style="position: sticky; top: 0; background: white; z-index: 1;">
+      <tr>
+        <th>Leave type</th>
+        <th>Duration</th>
+        <th>Date Range</th>
+        <th>Days</th>
+        <th>FN/AN</th>
+        <th>Applied On</th>
+        <th>Status</th>
+        <th>Approved By</th>
+        <th>Remarks</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let leave of pagedData">
         <td>{{ leave.leaveType }}</td>
         <td>{{ leave.leaveDurationType }}</td>
         <td>{{ leave.dateRange }}</td>
@@ -38,28 +43,104 @@
         <td>{{ leave.status }}</td>
         <td>{{ leave.approverName }}</td>
         <td>{{ leave.remarks || 'N/A' }}</td>
-        <td style="width:100px"><button class="btn btn-success" *ngIf="leave.status != 'CANCELLED'" (click)="cancelLeave(leave.leaveId)" [disabled]="leave.status == 'APPROVED'">Cancel</button>
-        <p *ngIf="leave.status == 'CANCELLED'">CANCELLED</p>
+        <td style="width:100px">
+          <button class="btn btn-success" *ngIf="leave.status == 'PENDING'" (click)="cancelLeave(leave.leaveId)">Cancel</button>
+          <p *ngIf="leave.status == 'CANCELLED_BY_USER'">CANCELLED</p>
+          <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#cancellationRequest" (click)="updateLeaveIdOnCancelRequest(leave.leaveId)" *ngIf="leave.status == 'APPROVED'">Cancel</button>
         </td>
       </tr>
-                <!-- <tr>
-                    <td>Sick</td>
-                    <td>Full Day</td>
-                    <td>22/05/2025 - 23/05/2025</td>
-                    <td>2</td>
-                    <td>-</td>
-                    <td>22/05/2025</td>
-                    <td>Approved</td>
-                    <td>Sreeranjini</td>
-                    <td>-</td>
-                    <td style="width:100px"><button class="btn btn-success">Cancel</button></td>
-                </tr> -->
-            </tbody>
-        </table>
+    </tbody>
+  </table>
+</div>
+
+
+  <div style="display:flex;justify-content: space-between;margin-top: 10px;">
+    <div style="display:flex;flex-direction: row;gap:10px;margin-left: 10px;">
+      <h6>Show</h6>
+      <select style="width:50px;height: 20px;" (change)="showSelectedPage($event)">
+        <option selected disabled></option>
+        <option *ngFor="let num of getArrayRange()" [value]="num">{{num}}</option>
+      </select>
     </div>
-    <div >
-        <div>
-        <h6 >Show</h6>
-        </div>
+    <div style="display: flex;flex-direction: row;align-items: center;">
+      <button class="pagination" (click)="prevPage()"><span class="material-symbols-outlined">arrow_back_ios</span></button>
+      <h6>{{currentPage}}</h6>
+      <button style="margin-left: 10px;" (click)="nextPage()" class="pagination"><span class="material-symbols-outlined">arrow_forward_ios</span></button>
     </div>
+  </div>
+</div>
+
+<!-- Filter Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Filter</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="filterForm">
+          <div class="form-group mb-2">
+            <label>Leave Type</label>
+            <!-- <input type="text" class="form-control" formControlName="leaveType"> -->
+            <select class="form-control" formControlName="leaveType">
+              <option value="">All</option>
+              <option value="EARNED_LEAVE">Earned Leave</option>
+              <option value="ADVANCE_LEAVE">Advance Leave</option>
+              <option value="PATERNITY">Paternity</option>
+              <option value="MATERNITY">Maternity</option>
+              <option value="LOP">Lop</option>
+            </select>
+          </div>
+          <div class="form-group mb-2">
+            <label>Status</label>
+            <select class="form-control" formControlName="status">
+              <option value="">All</option>
+              <option value="PENDING">Pending</option>
+              <option value="APPROVED">Approved</option>
+              <option value="CANCELLED_BY_USER">Cancelled</option>
+              <option value="CANCELLATION_APPROVED">Cancellation Approved</option>
+              <option value="CANCELLATION_REJECTED">Cancellation Rejected</option>
+            </select>
+          </div>
+          <div class="form-group mb-2">
+            <label>From Date</label>
+            <input type="date" class="form-control" formControlName="fromDate">
+          </div>
+          <div class="form-group mb-2">
+            <label>To Date</label>
+            <input type="date" class="form-control" formControlName="toDate">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="applyFilters()" data-bs-dismiss="modal">Apply</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Cancel Request Modal -->
+<div class="modal fade" id="cancellationRequest" tabindex="-1" aria-labelledby="cancellationRequest" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="cancellationRequest">Cancel Leave</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="cancellationForm">
+          <div class="form-group">
+            <label>Reason</label>
+            <input type="text" class="form-control" formControlName="reason" />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" [disabled]="cancellationForm.invalid" data-bs-dismiss="modal" (click)="cancelApprovedLeave()">Submit</button>
+      </div>
+    </div>
+  </div>
 </div>

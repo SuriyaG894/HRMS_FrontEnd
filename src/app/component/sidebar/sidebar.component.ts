@@ -18,6 +18,7 @@ export class SidebarComponent {
   constructor(private sideBarService:SidebarService,private tabService:TabService){}
 
     page!:string;
+  
 
     isSelected = true;
   toggleSidebar() {
@@ -30,6 +31,7 @@ export class SidebarComponent {
   setPage(page:string){
     this.page = page;
     console.log(this.page);
+    localStorage.setItem('page',page);
     this.tabService.setTab(this.page);
   }
 

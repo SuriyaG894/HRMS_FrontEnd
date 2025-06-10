@@ -5,4 +5,8 @@ export interface ILeaveApply{
     endDate?:string,
     noonType?:string,
     reason:string,
+    expectedDateOfDelivery?:string,
+    adopted?:boolean,
+    adoptedDate?:string,
+    adoptedChildAgeInMonths?:number
 }

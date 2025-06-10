@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { AuthService } from '../../../services/authService/auth.service';
 
 @Component({
   selector: 'app-leave-tab',
@@ -9,10 +10,11 @@ import { Router, RouterModule, RouterOutlet } from '@angular/router';
   styleUrl: './leave-tab.component.css'
 })
 export class LeaveTabComponent {
-role?:string[];
+  role?:string[];
   LoggedUsername?:string;
+  
 
-  constructor(private route:Router){}
+  constructor(private route:Router,private authService:AuthService){}
 
   @Input() toggle!:boolean;
 
@@ -35,7 +37,7 @@ role?:string[];
       // if (this.LoggedUsername) {
       // this.LoggedUsername = this.LoggedUsername.split('@')[0];
       // }
-      // this.role = this.authService.decodeToken()['roles'];
-      // console.log(this.role);
+      this.role = this.authService.decodeToken()['roles'];
+      console.log(this.role);
   }
 }
