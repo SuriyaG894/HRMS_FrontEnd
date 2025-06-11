@@ -1,0 +1,92 @@
+<div style="width:100%">
+  <div class="btn-alignment">
+    <div style="position: relative;">
+      <span style="position: absolute;z-index: 100;left: 170px;top:10px" class="material-symbols-outlined">search</span>
+      <input type="text" [(ngModel)]="searchText" (input)="onSearch()" style="padding:8px;border: 2px solid #0A1A86;" placeholder="Search Employee" class="form-control" />
+    </div>
+    <div>
+      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#filterModal">Filter <span class="material-symbols-outlined">filter_alt</span></button>
+    </div>
+  </div>
+
+  <div class="table-alignment">
+    <table class="table table-responsive table-bordered">
+      <thead>
+        <tr>
+          <th>EmployeeId</th>
+          <th>Employee Name</th>
+          <th>Experience</th>
+          <th>Total No of leaves entitles</th>
+          <th>Leave Balance</th>
+          <th>Carried Forward Leaves</th>
+          <th>Earned Leave</th>
+          <th>Loss Of Pay</th>
+          <th>Advance Leave</th>
+          <th>Parental Leave</th>
+          <th>Unused Leave</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let request of pagedData; let i = index">
+          <td>{{request.employeeId}}</td>
+          <td>{{request.employeeName}}</td>
+          <td style="width: 160px;">{{request.experience | monthsToYears}}</td>
+          <td>{{ request.totalLeavesEntitled}}</td>
+          <td>{{request.leaveBalance}}</td>
+          <td>{{request.carriedForwardLeaves}}</td>
+          <td>{{request.earnedLeave}}</td>
+          <td>{{request.lossOfPay}}</td>
+          <td>{{request.advanceLeave}}</td>
+          <td>{{request.maternityOrPaternityLeave}}</td>
+          <td>{{request.unusedLeave}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="display:flex;justify-content: space-between;">
+    <div style="display:flex;flex-direction: row;gap:10px;margin-left: 10px;">
+      <h6>Show</h6>
+      <select style="width:50px;height: 20px;" (change)="showSelectedPage($event)">
+        <option selected disabled></option>
+        <option *ngFor="let num of getRange(totalPages)" [value]="num">{{num}}</option>
+      </select>
+    </div>
+    <div style="display: flex;flex-direction: row;align-items: center;">
+      <button class="pagination" (click)="prevPage()"><span class="material-symbols-outlined">arrow_back_ios</span></button>
+      <h6>{{currentPage}}</h6>
+      <button style="margin-left: 10px;" (click)="nextPage()" class="pagination"><span class="material-symbols-outlined">arrow_forward_ios</span></button>
+    </div>
+  </div>
+
+  <!-- Bootstrap Modal -->
+<div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <h5 class="modal-title" id="filterModalLabel">Filter</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeFilterModal()"></button>
+      </div>
+      
+      <div class="modal-body">
+        <form [formGroup]="filterForm">
+          <div class="mb-3">
+            <label for="experienceCategory" class="form-label">Experience</label>
+            <select formControlName="experienceCategory" class="form-control">
+              <option value="">-- Select --</option>
+              <option value="0-2">0 - 2 years</option>
+              <option value="2+">2+ years</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="resetFilter()" >Reset</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="applyFilter()">Apply</button>
+      </div>
+
+    </div>
+  </div>
+</div>

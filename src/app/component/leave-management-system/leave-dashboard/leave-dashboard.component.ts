@@ -14,6 +14,10 @@ import { RouterModule, RouterOutlet } from '@angular/router';
 export class LeaveDashboardComponent implements OnInit{
     toggle:boolean = false;
 
+    quarterlyLeaveBalance!:number;
+
+    
+
     constructor(private sideBarService:SidebarService){}
 
     ngOnInit(){

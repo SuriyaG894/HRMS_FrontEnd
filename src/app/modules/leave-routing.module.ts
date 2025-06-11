@@ -11,6 +11,7 @@ import { PendingLeaveRequestRmComponent } from '../component/leave-management-sy
 import { LeaveHistoryRmComponent } from '../component/leave-management-system/leave-history-rm/leave-history-rm.component';
 import { LeaveHistoryHrComponent } from '../component/leave-management-system/leave-history-hr/leave-history-hr.component';
 import { PendingLeaveRequestHrComponent } from '../component/leave-management-system/pending-leave-request-hr/pending-leave-request-hr.component';
+import { EmployeeLeaveSummaryComponent } from '../component/leave-management-system/employee-leave-summary/employee-leave-summary.component';
  const routes: Routes = [
   { path: 'dashboard', component: LeaveDashboardComponent },
   { path: 'applyLeave', component: ApplyLeaveComponent },
@@ -23,6 +24,7 @@ import { PendingLeaveRequestHrComponent } from '../component/leave-management-sy
   {path:'pendingRequestHR',component:PendingLeaveRequestHrComponent},
   {path:'leaveHistoryRM',component:LeaveHistoryRmComponent},
   {path:'leaveHistoryHR',component:LeaveHistoryHrComponent},
+  {path:'employeeLeaveSummary',component:EmployeeLeaveSummaryComponent},
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   
  ];

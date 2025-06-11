@@ -12,6 +12,7 @@ import { PendingLeaveRequestRmComponent } from '../component/leave-management-sy
 import { LeaveHistoryRmComponent } from '../component/leave-management-system/leave-history-rm/leave-history-rm.component';
 import { LeaveHistoryHrComponent } from '../component/leave-management-system/leave-history-hr/leave-history-hr.component';
 import { PendingLeaveRequestHrComponent } from '../component/leave-management-system/pending-leave-request-hr/pending-leave-request-hr.component';
+import { EmployeeLeaveSummaryComponent } from '../component/leave-management-system/employee-leave-summary/employee-leave-summary.component';
  @NgModule({
   declarations: [
   ],
@@ -29,7 +30,8 @@ import { PendingLeaveRequestHrComponent } from '../component/leave-management-sy
     LeaveHistoryRmComponent,
     LeaveHistoryRmComponent,
     LeaveHistoryHrComponent,
-    PendingLeaveRequestHrComponent
+    PendingLeaveRequestHrComponent,
+    EmployeeLeaveSummaryComponent
   ]
  })
  export class LeaveModule {}

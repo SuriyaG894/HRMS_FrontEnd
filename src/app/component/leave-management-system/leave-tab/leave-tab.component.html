@@ -36,7 +36,7 @@
           <a class="nav-link" routerLink="leave/wfhLog"
           routerLinkActive="active">WFH Log</a>
         </li> -->
-        <li class="nav-item" *ngIf="role?.includes('USER')">
+        <li class="nav-item" *ngIf="role?.includes('USER') || role?.includes('HR_MANAGER')">
           <a class="nav-link" routerLink="leave/policy" routerLinkActive="active">Leave Policy</a>
         </li>
         <li class="nav-item" *ngIf="role?.includes('REPORTING_MANAGER')">
@@ -50,6 +50,9 @@
         </li>
         <li class="nav-item" *ngIf="role?.includes('HR_MANAGER')">
           <a class="nav-link" routerLink="leave/pendingRequestHR" routerLinkActive="active">Pending Request</a>
+        </li>
+        <li class="nav-item" *ngIf="role?.includes('HR_MANAGER')">
+          <a class="nav-link" routerLink="leave/employeeLeaveSummary" routerLinkActive="active">Leave Balance Summary</a>
         </li>
       </ul>
     </div>

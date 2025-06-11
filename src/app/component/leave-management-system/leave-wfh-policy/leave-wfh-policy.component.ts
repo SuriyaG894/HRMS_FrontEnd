@@ -1,50 +1,90 @@
 import { Component } from '@angular/core';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpEvent, HttpEventType } from '@angular/common/http';
 import { ChangeDetectorRef } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../services/authService/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-leave-wfh-policy',
-  imports: [PdfViewerModule],
+  imports: [PdfViewerModule,FormsModule,CommonModule,ReactiveFormsModule],
   templateUrl: './leave-wfh-policy.component.html',
   styleUrl: './leave-wfh-policy.component.css'
 })
 export class LeaveWfhPolicyComponent {
 
-pdfBlobUrl:SafeResourceUrl|null= "";
+pdfBlobUrl: SafeResourceUrl | null = null;
   page: number = 1;
   totalPages: number = 0;
+  roles: string[] = [];
+  form: FormGroup;
+  selectedFile: File | null = null;
 
-constructor(private sanitizer: DomSanitizer,private http:HttpClient,private cdRef: ChangeDetectorRef) {}
-ngOnInit(): void {
-  this.loadPdfFromApi();
-}
-
-loadPdfFromApi() {
-  // Replace this with your actual service call
-  this.http.get('http://localhost:8765/api/leave/policy', { responseType: 'blob' })
-    .subscribe(blob => {
-      console.log("PDF BLOB",blob);
-      const url = URL.createObjectURL(blob);
-      this.pdfBlobUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-      // this.pdfBlobUrl = url;
-      console.log("Blob url created",this.pdfBlobUrl);
-      this.cdRef.detectChanges();
-      // window.open(this.pdfBlobUrl, '_blank');
-    });
-}
-
-onPdfLoaded(pdf: any) {
-    this.totalPages = pdf.numPages;
+  constructor(
+    private sanitizer: DomSanitizer,
+    private http: HttpClient,
+    private cdRef: ChangeDetectorRef,
+    private authService: AuthService,
+    private fb: FormBuilder
+  ) {
+    this.form = this.fb.group({});
   }
 
-  nextPage() {
-    if (this.page < this.totalPages) this.page++;
+  ngOnInit(): void {
+    this.loadPdfFromApi();
+    this.roles = this.authService.decodeToken()['roles'] || [];
   }
 
-  prevPage() {
-    if (this.page > 1) this.page--;
+  loadPdfFromApi(): void {
+    this.http.get('http://localhost:8765/api/leave/policy', { responseType: 'blob' })
+      .subscribe(blob => {
+        const url = URL.createObjectURL(blob);
+        this.pdfBlobUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+        this.cdRef.detectChanges();
+      });
+  }
+
+  onFileChange(event: any): void {
+    const file = event.target.files[0];
+    if (file && file.type === 'application/pdf') {
+      this.selectedFile = file;
+    } else {
+      Swal.fire('Invalid File', 'Only PDF files are allowed.', 'error');
+      event.target.value = '';
+    }
+  }
+
+  submit(): void {
+    if (!this.selectedFile) {
+      Swal.fire('No File Selected', 'Please choose a PDF file to upload.', 'warning');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', this.selectedFile);
+    formData.append('uploadedBy', 'HR');
+    formData.append('version', 'v1');
+
+    this.http.post('http://localhost:8765/api/hr/upload-policy', formData, {
+      reportProgress: true,
+      observe: 'events',
+      responseType:'text'as 'json'
+    }).subscribe({
+    next: (event: HttpEvent<any>) => {
+      if (event.type === HttpEventType.Response) {
+        Swal.fire('Success', 'Leave policy uploaded successfully.', 'success');
+        this.selectedFile = null;
+        this.loadPdfFromApi(); // Refresh PDF
+      }
+    },
+    error: (error: HttpErrorResponse) => {
+      console.error('Upload failed:', error);
+      Swal.fire('Upload Failed', error.error?.message || 'Something went wrong.', 'error');
+    }
+  });
   }
 
 }

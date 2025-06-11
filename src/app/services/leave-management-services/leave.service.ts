@@ -9,6 +9,7 @@ import { IPayLoad } from '../../component/interface/IPayLoad';
 import { IPendingLeaveRequest } from '../../component/interface/IPendingLeaveRequest';
 import { IApprovalRequest } from '../../component/interface/IApprovalRequest';
 import { ICancellationRequest } from '../../component/interface/ICancellationRequest';
+import { IEmployeeLeaveSummary } from '../../component/interface/IEmployeeLeaveSummary';
 
 @Injectable({
   providedIn: 'root'
@@ -94,6 +95,10 @@ export class LeaveService {
   rejectApprovedLeave(leaveId:number,cancellationRequest:any){
     console.log(cancellationRequest);
     return this.http.put(`${this.baseUri}/hr/rejectLeaveRequest/${leaveId}`,cancellationRequest,{responseType:'text' as 'json'});
+  }
+
+  getEmployeeLeaveSummary():Observable<IEmployeeLeaveSummary[]>{
+    return this.http.get<IEmployeeLeaveSummary[]>(`${this.baseUri}/hr/getEmployeeLeaveSummary`);
   }
 
 }

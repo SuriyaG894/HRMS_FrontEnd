@@ -1,29 +1,31 @@
-.pdfView{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 3px solid black;
-    width:max-content;
-    padding: 10px;
-    overflow-x: hidden;
-}
-.container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* optional spacing between upload and PDF */
+  padding: 1rem;
 }
 
-.pdfdisplay{
-    width:500px; 
-    height:385px;
-    border:none;
-    
+.upload-form {
+  width: 100%;
+  margin-left:10%
 }
 
-@media (min-width: 1000px) and (max-width: 5000px) {
-  .pdfdisplay {
-    width: 900px;
-    height: 578px;
-  }
+.pdfView {
+  flex-grow: 1;
+  height: 80vh; /* Adjust height as needed */
+  display: flex;
+  justify-content: center;
+}
+
+.pdfdisplay {
+  width: 80%;
+  height: 65%;
+  border: none;
+}
+
+.pdfdisplayUSER{
+  width: 80%;
+  height: 80%;
+  border:none;
 }
 

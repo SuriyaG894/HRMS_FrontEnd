@@ -9,10 +9,6 @@
         <div>
             <button class="btn btn-success">Filter <span class="material-symbols-outlined">filter_alt</span></button>
         </div>
-        <div>
-            <button class="btn" style="background-color: #0A1A86;color:white">Sort By <span
-                    class="material-symbols-outlined">swap_vert</span></button>
-        </div>
     </div>
 
     <div class="table-alignment">
@@ -33,22 +29,21 @@
                     <td>{{request.empId}}</td>
                     <td>{{request.appliedBy}}</td>
                     <td>{{request.leaveType}}</td>
-                    <td style="width: 100px;">
+                    <td style="width: 120px;">
                         {{ request.startDate === request.endDate
                         ? (request.startDate|date:'dd-MM-yyyy')
                         : (request.startDate|date:'dd-MM-yyyy') + ' - ' + (request.endDate|date:'dd-MM-yyyy')}}
                     </td>
                     <td>{{request.totalLeaveDays}}</td>
                     <td>{{request.approvalStatus}}</td>
-                    <!-- <td><input type="text" [value]="request.remarks" [(ngModel)]="request.remarks" [disabled]="request.remarks != null"/></td> -->
                     <td
-                        style="width:100px;display: flex;flex-direction: row;justify-content: center;align-items: center;">
-
-                        <button class="btn" style="width: 10px;" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                            (click)="openModal(request,i)"><span class="material-symbols-outlined"
-                                style="color:black">visibility</span></button>
-                        <button class="btn"><span class="material-symbols-outlined" style="color:black"
-                                *ngIf="request.approvalStatus === 'APPROVED'">edit_square</span></button>
+                        style="display: flex;align-items: center;justify-content: center;">
+                        <button class="btn" style="width: 10px;margin-right: 15%;" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                            (click)="openModal(request,i)">
+                            <span class="material-symbols-outlined" style="color:black">
+                                visibility
+                            </span>
+                        </button>
                     </td>
                 </tr>
 
@@ -216,14 +211,15 @@
                             <td class="tbl-body">
                                 <span style="padding: 0px;color:#0A1A86"
                                     *ngIf="selectedRequest?.approvalStatus!='APPROVED'">{{selectedRequest?.approvalStatus}}</span>
-                                <button class="btn always-visible-btn" data-bs-toggle="modal" data-bs-target="#cancellationRequest"
-                                style="background-color: red;padding: 4px;padding-bottom: 1px;"
+                                <button class="btn always-visible-btn" data-bs-toggle="modal"
+                                    data-bs-target="#cancellationRequest"
+                                    style="background-color: red;padding: 4px;padding-bottom: 1px;"
                                     *ngIf="selectedRequest?.approvalStatus === 'APPROVED'">
                                     <span class="material-symbols-outlined" style="font-size: 20px;color: white;">
                                         thumb_down
                                     </span>
                                 </button>
-                        </td>
+                            </td>
                         </tr>
                         <tr>
                             <td class="tbl-title">Remarks:</td>
@@ -245,24 +241,25 @@
 </div>
 
 <div class="modal fade" id="cancellationRequest" tabindex="-1" aria-labelledby="cancellationRequest" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="cancellationRequest">Filter</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="cancellationForm" >
-            <div class="form-group">
-                <label>Remark</label>
-                <input type="text" class="form-control" formControlName="remark" />
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="cancellationRequest">Filter</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>
-        <button type="button" class="btn btn-primary" [disabled]="cancellationForm.invalid" data-bs-dismiss="modal" (click)="cancelApprovedLeave()">Submit</button>
-      </div>
+            <div class="modal-body">
+                <form [formGroup]="cancellationForm">
+                    <div class="form-group">
+                        <label>Remark</label>
+                        <input type="text" class="form-control" formControlName="remark" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" [disabled]="cancellationForm.invalid"
+                    data-bs-dismiss="modal" (click)="cancelApprovedLeave()">Submit</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
