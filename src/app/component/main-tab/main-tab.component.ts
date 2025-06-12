@@ -27,7 +27,7 @@ isScrollable = true;
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // Set scroll visibility based on route
-        const noScrollRoutes = ['/leave/policy', '/leave/summary','/leave/applyLeave','/leave/leaveLog','/leave/leaveHistoryHR','/leave/leaveHistoryRM'];
+        const noScrollRoutes = ['/leave/policy', '/leave/summary','/leave/applyLeave','/leave/leaveLog','/leave/leaveHistoryHR','/leave/dashboard','/leave/leaveHistoryRM'];
         console.log(!noScrollRoutes.includes(event.urlAfterRedirects));
         this.isScrollable = !noScrollRoutes.includes(event.urlAfterRedirects);
       }

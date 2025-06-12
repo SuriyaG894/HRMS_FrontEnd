@@ -1,15 +1,14 @@
-<div style="display: block;position: relative;">
+<div *ngIf="datas" style="display: block;position: relative;">
   <canvas baseChart
-        [type]="chartType"
-        [data]="chartData"
-        [options]="chartOptions">
-</canvas>
-<div class="inside-content">
+          [type]="chartType"
+          [data]="chartData"
+          [options]="chartOptions">
+  </canvas>
+  <div class="inside-content">
     <div style="display:flex;flex-direction: column;">
-    <span style="font-weight: 900;font-size: 20px;">25% USED</span>
-    <span>4/16</span>
-    <span>Days Taken</span>
+      <span style="font-weight: 900;font-size: 20px;">{{ (datas.used / datas.total) | percent }} USED</span>
+      <span>{{ datas.used }}/{{ datas.total }}</span>
+      <span>Days Taken</span>
     </div>
+  </div>
 </div>
-</div>
-

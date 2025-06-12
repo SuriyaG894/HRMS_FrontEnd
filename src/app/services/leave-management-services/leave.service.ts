@@ -10,6 +10,9 @@ import { IPendingLeaveRequest } from '../../component/interface/IPendingLeaveReq
 import { IApprovalRequest } from '../../component/interface/IApprovalRequest';
 import { ICancellationRequest } from '../../component/interface/ICancellationRequest';
 import { IEmployeeLeaveSummary } from '../../component/interface/IEmployeeLeaveSummary';
+import { IQuarterlyLeaveBalance } from '../../component/interface/IQuarterlyLeaveBalance';
+import { IYearlyLeaveBalance } from '../../component/interface/IYearlyLeaveBalance';
+import { ILeaveBalanceAll } from '../../component/interface/ILeaveBalanceAll';
 
 @Injectable({
   providedIn: 'root'
@@ -100,5 +103,29 @@ export class LeaveService {
   getEmployeeLeaveSummary():Observable<IEmployeeLeaveSummary[]>{
     return this.http.get<IEmployeeLeaveSummary[]>(`${this.baseUri}/hr/getEmployeeLeaveSummary`);
   }
+
+  getQuarterlyLeaveBalance():Observable<IQuarterlyLeaveBalance>{
+      let employeeId = this.authService.decodeToken()['empId'];
+      return this.http.get<IQuarterlyLeaveBalance>("http://localhost:8765/api/leave/quarterlyLeaveBalance/"+employeeId);
+    }
+
+    getYearlyLeaveBalanceSummary():Observable<IYearlyLeaveBalance>{
+      let employeeId = this.authService.decodeToken()['empId'];
+      return this.http.get<IYearlyLeaveBalance>(`${this.baseUri}/leave/leaveBalanceSummary/${employeeId}`);
+    }
+
+    getEmployeeLeaveSummaryByEmpID(employeeId:number):Observable<IEmployeeLeaveSummary>{
+    return this.http.get<IEmployeeLeaveSummary>(`${this.baseUri}/leave/getEmployeeLeaveSummary/${employeeId}`);
+  }
+
+  getAllLeaveBalance():Observable<ILeaveBalanceAll[]>{
+        return this.http.get<ILeaveBalanceAll[]>(`${this.baseUri}/hr/allLeaveBalance`);
+    }
+
+    updateLeaveBalance(employeeId:number,leaveBalance:ILeaveBalanceAll)
+    {
+        return this.http.put(`${this.baseUri}/hr/${employeeId}`,leaveBalance,{responseType:'text'as 'json'});
+    }
+
 
 }

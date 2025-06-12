@@ -1,5 +1,5 @@
 
-<div style="max-width:71rem;">
+<div style="max-width:76rem;overflow-y: scroll;max-height: 100%;">
     <div class="container my-4">
         <!-- Apply Leave Button Row -->
         <div class="row leave-btn mb-3">
@@ -23,22 +23,22 @@
                                     <table>
                                         <tr>
                                             <td>Last Credited On:</td>
-                                            <td>10-02-2025</td>
+                                            <td>{{quarterlyLeaveBalance?.updatedAt}}</td>
                                         </tr>
                                         <tr>
                                             <td>Credited Leaves:</td>
-                                            <td>2</td>
+                                            <td>{{quarterlyLeaveBalance?.entitledDays}}</td>
                                         </tr>
                                         <tr>
                                             <td>Carry Forwarded:</td>
-                                            <td>5</td>
+                                            <td>{{yearlyLeaveBalanceSummary?.carryForwardLeave}}</td>
                                         </tr>
                                     </table>
                                 </div>
                             </div>
                             <div class="col-auto">
                                 <div class="box1 text-center">
-                                    <h2>2.51</h2>
+                                    <h2>{{ (quarterlyLeaveBalance?.entitledDays ?? 0) - (quarterlyLeaveBalance?.usedDays ?? 0) }}</h2>
                                     <span>Leave balance</span>
                                 </div>
                             </div>
@@ -118,21 +118,21 @@
                 <div class="card  h-100">
                     <div class="card-body text-center">
                         <div class="leave-types">
-                            <div class="leave-box">
-                                <h6>Casual leave</h6>
-                                <h3>3</h3>
+                            <div class="leave-box" *ngIf="employeeLeaveSummary.earnedLeave>0">
+                                <h6>Earned leave</h6>
+                                <h3>{{employeeLeaveSummary.earnedLeave}}</h3>
                             </div>
-                            <div class="leave-box">
-                                <h6>Maternity leave</h6>
-                                <h3>3</h3>
+                            <div class="leave-box" *ngIf="employeeLeaveSummary.maternityOrPaternityLeave>0">
+                                <h6>Parental leave</h6>
+                                <h3>{{employeeLeaveSummary.maternityOrPaternityLeave}}</h3>
                             </div>
-                            <div class="leave-box">
-                                <h6>Sick Leave</h6>
-                                <h3>3</h3>
+                            <div class="leave-box" *ngIf="employeeLeaveSummary.advanceLeave">
+                                <h6>Advance Leave</h6>
+                                <h3>{{employeeLeaveSummary.advanceLeave}}</h3>
                             </div>
-                            <div class="leave-box">
-                                <h6>Paternity leave</h6>
-                                <h3>3</h3>
+                            <div class="leave-box" *ngIf="employeeLeaveSummary.lossOfPay">
+                                <h6>LOP</h6>
+                                <h3>{{employeeLeaveSummary.lossOfPay}}</h3>
                             </div>
                         </div>
                     </div>

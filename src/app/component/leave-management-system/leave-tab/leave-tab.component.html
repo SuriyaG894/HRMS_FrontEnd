@@ -54,6 +54,9 @@
         <li class="nav-item" *ngIf="role?.includes('HR_MANAGER')">
           <a class="nav-link" routerLink="leave/employeeLeaveSummary" routerLinkActive="active">Leave Balance Summary</a>
         </li>
+        <li class="nav-item" *ngIf="role?.includes('HR_MANAGER')">
+          <a class="nav-link" routerLink="leave/leaveAllocationPanel" routerLinkActive="active">Leave Allocation Panel</a>
+        </li>
       </ul>
     </div>
   </div>

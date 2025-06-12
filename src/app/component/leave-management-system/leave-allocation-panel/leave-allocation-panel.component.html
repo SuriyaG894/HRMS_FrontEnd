@@ -1,0 +1,72 @@
+<table class="table table-bordered mt-3">
+    <thead>
+        <tr>
+            <th>EmployeeId</th>
+            <th>Year</th>
+            <th>Quarter</th>
+            <th>Leave Type</th>
+            <th>Entitled</th>
+            <th>Used</th>
+            <th>Advance</th>
+            <th>Maternity</th>
+            <th>Paternity</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let lb of pagedData; let i = index">
+  <td>
+    <span>{{ lb.employeeId }}</span>
+  </td>
+  <td>
+    <span >{{ lb.year }}</span>
+  </td>
+  <td>
+    <span >{{ lb.quarter }}</span>
+  </td>
+  <td>
+    <span *ngIf="editingRowIndex !== i">{{ lb.leaveType }}</span>
+    <input *ngIf="editingRowIndex === i" [(ngModel)]="editedRow.leaveType" class="form-control"/>
+  </td>
+  <td>
+    <span *ngIf="editingRowIndex !== i">{{ lb.entitledDays }}</span>
+    <input *ngIf="editingRowIndex === i" [(ngModel)]="editedRow.entitledDays" class="form-control"/>
+  </td>
+  <td>
+    <span *ngIf="editingRowIndex !== i">{{ lb.usedDays }}</span>
+    <input *ngIf="editingRowIndex === i" [(ngModel)]="editedRow.usedDays" class="form-control"/>
+  </td>
+  <td>
+    <span *ngIf="editingRowIndex !== i">{{ lb.advanceLeaveTaken }}</span>
+    <input *ngIf="editingRowIndex === i" [(ngModel)]="editedRow.advanceLeaveTaken" class="form-control"/>
+  </td>
+  <td>
+    <span *ngIf="editingRowIndex !== i">{{ lb.maternityLeave }}</span>
+    <input *ngIf="editingRowIndex === i" [(ngModel)]="editedRow.maternityLeave" class="form-control"/>
+  </td>
+  <td>
+    <span *ngIf="editingRowIndex !== i">{{ lb.paternityLeave }}</span>
+    <input *ngIf="editingRowIndex === i" [(ngModel)]="editedRow.paternityLeave" class="form-control"/>
+  </td>
+  <td>
+    <button *ngIf="editingRowIndex !== i" (click)="editRow(i)" class="btn btn-sm btn-primary">Edit</button>
+    <button *ngIf="editingRowIndex === i" (click)="saveRow()" class="btn btn-sm btn-success">Save</button>
+    <button *ngIf="editingRowIndex === i" (click)="cancelEdit()" class="btn btn-sm btn-secondary ms-1">Cancel</button>
+  </td>
+</tr>
+    </tbody>
+</table>
+
+<nav *ngIf="totalPages > 1" class="mt-2">
+    <ul class="pagination justify-content-center">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+            <button class="page-link" (click)="prevPage()">Previous</button>
+        </li>
+        <li class="page-item" *ngFor="let page of totalPagesArray()" [class.active]="page === currentPage">
+            <button class="page-link" (click)="goToPage(page)">{{ page }}</button>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <button class="page-link" (click)="nextPage()">Next</button>
+        </li>
+    </ul>
+</nav>

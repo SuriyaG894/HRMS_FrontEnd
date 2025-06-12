@@ -42,13 +42,11 @@
                     <td>{{request.approvalStatus}}</td>
                     <!-- <td><input type="text" [value]="request.remarks" [(ngModel)]="request.remarks" [disabled]="request.remarks != null"/></td> -->
                     <td
-                        style="width:100px;display: flex;flex-direction: row;justify-content: center;align-items: center;">
+                        style="display: flex;align-items: center;justify-content: center;">
 
                         <button class="btn" style="width: 10px;" data-bs-toggle="modal" data-bs-target="#exampleModal"
                             (click)="openModal(request,i)"><span class="material-symbols-outlined"
                                 style="color:black">visibility</span></button>
-                        <button class="btn"><span class="material-symbols-outlined" style="color:black"
-                                *ngIf="request.approvalStatus === 'APPROVED'">edit_square</span></button>
                     </td>
                 </tr>
 
