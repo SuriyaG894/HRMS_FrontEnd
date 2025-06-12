@@ -3,6 +3,7 @@
   flex-direction: column;
   gap: 1rem; /* optional spacing between upload and PDF */
   padding: 1rem;
+  overflow-x: hidden;
 }
 
 .upload-form {

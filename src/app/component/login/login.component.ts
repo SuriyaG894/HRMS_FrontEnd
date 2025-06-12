@@ -35,6 +35,7 @@ export class LoginComponent {
         console.log(res)
         this.authService.setToken(res.token);
         this.authService.loginStatusChanged.emit(true);
+        let roles = this.authService.decodeToken()['roles'];
         this.router.navigate(['/leave/dashboard']);
         console.log(this.authService.isLoggedIn());
         // let role:string = this.authService.decodeToken()['roles'];

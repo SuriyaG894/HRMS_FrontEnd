@@ -1,5 +1,6 @@
-<table class="table table-bordered mt-3">
-    <thead>
+<div  style="max-height: 350px; overflow-y: auto;margin-top: 10px;width: 95%;margin-left: auto; margin-right: auto;">
+<table class="table table-responsive table-bordered ">
+    <thead style="position: sticky; top: 0; background: white; z-index: 1;">
         <tr>
             <th>EmployeeId</th>
             <th>Year</th>
@@ -49,14 +50,14 @@
     <input *ngIf="editingRowIndex === i" [(ngModel)]="editedRow.paternityLeave" class="form-control"/>
   </td>
   <td>
-    <button *ngIf="editingRowIndex !== i" (click)="editRow(i)" class="btn btn-sm btn-primary">Edit</button>
+    <button *ngIf="editingRowIndex !== i" (click)="editRow(i)" class="btn btn-sm" style="background-color:#0A1A86 ;color:white">Edit</button>
     <button *ngIf="editingRowIndex === i" (click)="saveRow()" class="btn btn-sm btn-success">Save</button>
     <button *ngIf="editingRowIndex === i" (click)="cancelEdit()" class="btn btn-sm btn-secondary ms-1">Cancel</button>
   </td>
 </tr>
     </tbody>
 </table>
-
+</div>
 <nav *ngIf="totalPages > 1" class="mt-2">
     <ul class="pagination justify-content-center">
         <li class="page-item" [class.disabled]="currentPage === 1">
@@ -70,3 +71,5 @@
         </li>
     </ul>
 </nav>
+
+

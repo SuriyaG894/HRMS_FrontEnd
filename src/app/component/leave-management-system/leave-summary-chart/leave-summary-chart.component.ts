@@ -52,7 +52,7 @@ export class LeaveSummaryChartComponent implements OnInit {
       next: (response) => {
         this.datas = {
           used: response.totalUsedLeave,
-          total: response.totalAvailableLeave
+          total: (response.totalEarnedLeave+response.carryForwardLeave)
         };
 
         const remaining = this.datas.total - this.datas.used;
