@@ -11,6 +11,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+
+  roles:string[] =[];
+onRoleSelect(event: Event) {
+   const selectedRole = (event.target as HTMLSelectElement).value;
+  localStorage.setItem('selectedRole',selectedRole);
+  
+}
   hasNotification: boolean = true;
   time: number = Date.now();
   day?: string;
@@ -39,6 +46,9 @@ logout() {
     this.timerId = setInterval(() => {
       this.updateTime();
     }, 1000); // Update every 1 second
+
+    this.roles = this.authService.decodeToken()['roles'];
+    console.log(this.roles);
   }
 
   ngOnDestroy(): void {

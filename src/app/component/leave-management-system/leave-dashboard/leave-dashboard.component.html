@@ -117,22 +117,22 @@
             <div class="col-md-6">
                 <div class="card  h-100">
                     <div class="card-body text-center">
-                        <div class="leave-types">
+                        <div class="leave-types" *ngIf="employeeLeaveSummary">
                             <div class="leave-box" *ngIf="employeeLeaveSummary.earnedLeave>0">
                                 <h6>Earned leave</h6>
-                                <h3>{{employeeLeaveSummary.earnedLeave}}</h3>
+                                <h3>{{employeeLeaveSummary?.earnedLeave}}</h3>
                             </div>
                             <div class="leave-box" *ngIf="employeeLeaveSummary.maternityOrPaternityLeave>0">
                                 <h6>Parental leave</h6>
-                                <h3>{{employeeLeaveSummary.maternityOrPaternityLeave}}</h3>
+                                <h3>{{employeeLeaveSummary?.maternityOrPaternityLeave}}</h3>
                             </div>
                             <div class="leave-box" *ngIf="employeeLeaveSummary.advanceLeave">
                                 <h6>Advance Leave</h6>
-                                <h3>{{employeeLeaveSummary.advanceLeave}}</h3>
+                                <h3>{{employeeLeaveSummary?.advanceLeave}}</h3>
                             </div>
                             <div class="leave-box" *ngIf="employeeLeaveSummary.lossOfPay">
                                 <h6>LOP</h6>
-                                <h3>{{employeeLeaveSummary.lossOfPay}}</h3>
+                                <h3>{{employeeLeaveSummary?.lossOfPay}}</h3>
                             </div>
                         </div>
                     </div>

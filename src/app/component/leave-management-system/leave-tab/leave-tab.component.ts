@@ -10,7 +10,8 @@ import { AuthService } from '../../../services/authService/auth.service';
   styleUrl: './leave-tab.component.css'
 })
 export class LeaveTabComponent {
-  role?:string[];
+  role: string | null = null;
+
   LoggedUsername?:string;
   
 
@@ -37,7 +38,7 @@ export class LeaveTabComponent {
       // if (this.LoggedUsername) {
       // this.LoggedUsername = this.LoggedUsername.split('@')[0];
       // }
-      this.role = this.authService.decodeToken()['roles'];
+      this.role = localStorage.getItem('selectedRole')==null?'USER':localStorage.getItem('selectedRole');
       console.log(this.role);
   }
 }

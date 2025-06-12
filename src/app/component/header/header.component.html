@@ -7,6 +7,13 @@
             <span class="slogan">Tackle the day with intention and energy</span>
         </div>
     </div>
+    <div class="role-toggle">
+  <select (change)="onRoleSelect($event)" >
+    <option selected disabled>Select Role</option>
+    <option *ngFor="let role of roles" [value]="role">{{role}}</option>
+  </select>
+</div>
+
     <div class="right">
         <div class="time">
             <img class="clock" src="./assets/clock.png" alt="Clock">
