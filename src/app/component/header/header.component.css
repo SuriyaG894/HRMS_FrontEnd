@@ -58,14 +58,14 @@ font-size: 11px;
 .display-time{
     position: absolute;
     top:18px;
-    left:30.5%;
+    left:32.5%;
     transform: translateX(-10%);
     font-size:11px;
 }
 .display-day{
     position: absolute;
     top:51px;
-    left:33.5%;
+    left:35.5%;
     transform: translateX(-14%);
     font-size: 11px;
 }
@@ -133,7 +133,7 @@ font-size: 11px;
 
 .role-toggle{
   margin-top:30px;
-  margin-left:55%;
+  margin-left:50%;
 }
 
 /* .dropdown-menu a {

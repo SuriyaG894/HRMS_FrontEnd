@@ -40,7 +40,7 @@
           <a class="nav-link" routerLink="leave/policy" routerLinkActive="active">Leave Policy</a>
         </li>
         <li class="nav-item" *ngIf="role?.includes('REPORTING_MANAGER')">
-          <a class="nav-link" routerLink="leave/pendingRequestRM" routerLinkActive="active">Pending Request</a>
+          <a class="nav-link" routerLink="leave/pendingRequestRM" routerLinkActive="active">Pending Requests</a>
         </li>
         <li class="nav-item" *ngIf="role?.includes('REPORTING_MANAGER')">
           <a class="nav-link" routerLink="leave/leaveHistoryRM" routerLinkActive="active">Leave Approval History</a>
@@ -49,13 +49,13 @@
           <a class="nav-link" routerLink="leave/leaveHistoryHR" routerLinkActive="active">Leave Approval History</a>
         </li>
         <li class="nav-item" *ngIf="role?.includes('HR_MANAGER')">
-          <a class="nav-link" routerLink="leave/pendingRequestHR" routerLinkActive="active">Pending Request</a>
+          <a class="nav-link" routerLink="leave/pendingRequestHR" routerLinkActive="active">Pending Requests</a>
         </li>
         <li class="nav-item" *ngIf="role?.includes('HR_MANAGER')">
-          <a class="nav-link" routerLink="leave/employeeLeaveSummary" routerLinkActive="active">Leave Balance Summary</a>
+          <a class="nav-link" routerLink="leave/employeeLeaveSummary" routerLinkActive="active">Employee Leave Balance</a>
         </li>
         <li class="nav-item" *ngIf="role?.includes('HR_MANAGER')">
-          <a class="nav-link" routerLink="leave/leaveAllocationPanel" routerLinkActive="active">Leave Allocation Panel</a>
+          <a class="nav-link" routerLink="leave/leaveAllocationPanel" routerLinkActive="active">Leave Allocation</a>
         </li>
       </ul>
     </div>
