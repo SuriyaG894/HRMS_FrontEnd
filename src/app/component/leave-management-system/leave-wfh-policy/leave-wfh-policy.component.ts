@@ -40,13 +40,27 @@ pdfBlobUrl: SafeResourceUrl | null = null;
   }
 
   loadPdfFromApi(): void {
-    this.http.get('http://localhost:8765/api/leave/policy', { responseType: 'blob' })
-      .subscribe(blob => {
+  this.http.get('http://localhost:8765/api/leave/policy', { responseType: 'blob' })
+    .subscribe({
+      next: (blob) => {
         const url = URL.createObjectURL(blob);
         this.pdfBlobUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
         this.cdRef.detectChanges();
-      });
-  }
+      },
+      error: (err) => {
+        console.error('Failed to load PDF:', err);
+        // Optionally show a user-friendly message
+        Swal.fire({
+          icon: 'error',
+          title: 'PDF Load Failed',
+          text: 'Leave Policy not uploaded. Contact HR for further details',
+          confirmButtonColor: '#d33'
+        });
+        
+      }
+    });
+}
+
 
   onFileChange(event: any): void {
     const file = event.target.files[0];
