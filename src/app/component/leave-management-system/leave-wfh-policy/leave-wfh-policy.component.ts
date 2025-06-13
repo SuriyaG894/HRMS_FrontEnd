@@ -19,7 +19,7 @@ export class LeaveWfhPolicyComponent {
 pdfBlobUrl: SafeResourceUrl | null = null;
   page: number = 1;
   totalPages: number = 0;
-  roles: string[] = [];
+  roles: string | null =null;
   form: FormGroup;
   selectedFile: File | null = null;
 
@@ -35,7 +35,7 @@ pdfBlobUrl: SafeResourceUrl | null = null;
 
   ngOnInit(): void {
     this.loadPdfFromApi();
-    this.roles = this.authService.decodeToken()['roles'] || [];
+    this.roles = localStorage.getItem('selectedRoles');
   }
 
   loadPdfFromApi(): void {
